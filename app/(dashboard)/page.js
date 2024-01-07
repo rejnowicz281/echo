@@ -1,4 +1,5 @@
 import { addPost, getPosts } from "@/actions/posts";
+import DeletePostButton from "@/components/posts/DeletePostButton";
 
 export default async function Home() {
     const data = await getPosts();
@@ -22,6 +23,7 @@ export default async function Home() {
                     <li key={post.id}>
                         <h2>{post.title}</h2>
                         <p>{post.content}</p>
+                        <DeletePostButton id={post.id} />
                     </li>
                 ))}
             </ul>

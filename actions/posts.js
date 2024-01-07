@@ -3,7 +3,7 @@
 import { db } from "@/firebase";
 import actionError from "@/utils/actions/actionError";
 import actionSuccess from "@/utils/actions/actionSuccess";
-import { addDoc, collection, getDocs } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, getDocs } from "firebase/firestore";
 import { revalidatePath } from "next/cache";
 
 export async function getPosts() {
@@ -37,6 +37,22 @@ export async function addPost(formData) {
         revalidatePath("/");
 
         return actionSuccess(actionName, { title, content });
+    } catch (err) {
+        return actionError(actionName, { error: err.message });
+    }
+}
+
+export async function deletePost(id) {
+    const actionName = "deletePost";
+
+    try {
+        const postDoc = doc(db, "posts", id);
+
+        await deleteDoc(postDoc);
+
+        revalidatePath("/");
+
+        return actionSuccess(actionName, { id });
     } catch (err) {
         return actionError(actionName, { error: err.message });
     }
