@@ -1,37 +1,39 @@
-import { signOut } from "@/actions/auth";
-import { addPost, getPosts } from "@/actions/posts";
-import DeletePostButton from "@/components/posts/DeletePostButton";
-import { auth } from "@/firebase";
+import addPost from "@/actions/posts/modify/add-post";
+import getAllPosts from "@/actions/posts/read/get-all-posts";
+import ImagePicker from "@/components/general/image-picker";
+import SubmitButton from "@/components/general/submit-button";
+import WelcomeText from "@/components/general/welcome-text";
+import DeletePostButton from "@/components/posts/delete-post-button";
+import Image from "next/image";
 import Link from "next/link";
 
 export default async function Home() {
-    const data = await getPosts();
-
-    if (!data.success) return <h1>error</h1>;
-
-    const posts = data.posts;
-    const currentUser = auth.currentUser;
+    const { posts } = await getAllPosts();
 
     return (
         <>
-            <form action={signOut}>
-                <button>Logout</button>
-            </form>
-            <Link href="/register">Auth</Link>
+            <WelcomeText />
+            <div>
+                <Link href="/settings">Settings</Link>
+            </div>
+
             <h1>house page</h1>
-            <h2>Welcome, {currentUser ? currentUser.email : "guest"}</h2>
+
             <form action={addPost}>
-                <label htmlFor="title">Title:</label>
-                <input type="text" name="title" id="title" />
-                <label htmlFor="content">Content:</label>
-                <textarea name="content" id="content"></textarea>
-                <button type="submit">Submit</button>
+                <label htmlFor="text">Text:</label>
+                <input type="text" name="text" id="text" />
+                <label htmlFor="image">Image (optional)</label>
+                <ImagePicker id="image" name="image" />
+                <SubmitButton content="Add Post" loading="Adding Post..." />
             </form>
             <ul>
                 {posts.map((post) => (
                     <li key={post.id}>
-                        <h3>{post.title}</h3>
-                        <p>{post.content}</p>
+                        {post.text && <h3>{post.text}</h3>}
+                        {post.image_url && <Image src={post.image_url} width="400" height="400" alt="post image" />}
+                        <p>
+                            Creator: {post.creator.first_name} {post.creator.last_name}
+                        </p>
                         <DeletePostButton id={post.id} />
                     </li>
                 ))}
