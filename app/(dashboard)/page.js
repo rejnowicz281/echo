@@ -4,6 +4,7 @@ import ImagePicker from "@/components/general/image-picker";
 import SubmitButton from "@/components/general/submit-button";
 import WelcomeText from "@/components/general/welcome-text";
 import DeletePostButton from "@/components/posts/delete-post-button";
+import userDisplayName from "@/utils/general/user-display-name";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -31,9 +32,7 @@ export default async function Home() {
                     <li key={post.id}>
                         {post.text && <h3>{post.text}</h3>}
                         {post.image_url && <Image src={post.image_url} width="400" height="400" alt="post image" />}
-                        <p>
-                            Creator: {post.creator.first_name} {post.creator.last_name}
-                        </p>
+                        <p>Creator: {userDisplayName(post.creator)}</p>
                         <DeletePostButton id={post.id} />
                     </li>
                 ))}

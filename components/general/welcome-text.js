@@ -2,6 +2,7 @@
 
 import useAuthContext from "@/providers/auth-provider";
 import usePresenceContext from "@/providers/presence-provider";
+import userDisplayName from "@/utils/general/user-display-name";
 import Image from "next/image";
 
 export default function WelcomeText() {
@@ -10,9 +11,10 @@ export default function WelcomeText() {
 
     return (
         <div>
-            <p>
-                Welcome, {user.first_name} {user.last_name}
-            </p>
+            <p>Welcome, {userDisplayName(user)}</p>
+            {!user.first_name && !user.last_name && (
+                <p>It looks like you haven't set your full name yet. You can do that in the settings.</p>
+            )}
             <div>
                 <Image src={user.avatar_url} alt="Avatar" width={50} height={50} />
             </div>
