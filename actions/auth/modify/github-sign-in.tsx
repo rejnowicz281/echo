@@ -6,6 +6,8 @@ import { createClient } from "@/utils/supabase/server";
 import { headers } from "next/headers";
 
 const githubSignIn = async () => {
+    const actionName = "githubSignIn";
+
     const origin = headers().get("origin");
     const supabase = createClient();
 
@@ -16,9 +18,9 @@ const githubSignIn = async () => {
         },
     });
 
-    if (error) return actionError("githubSignIn", {}, null, "/login?message=Could not authenticate user");
+    if (error) return actionError(actionName, {}, null, "/login?message=Could not authenticate user");
 
-    return actionSuccess("githubSignIn", {}, null, data.url);
+    return actionSuccess(actionName, {}, null, data.url);
 };
 
 export default githubSignIn;

@@ -4,10 +4,12 @@ import actionSuccess from "@/utils/actions/action-success";
 import { createClient } from "@/utils/supabase/server";
 
 const signOut = async () => {
+    const actionName = "signOut";
+
     const supabase = createClient();
     await supabase.auth.signOut();
 
-    return actionSuccess("signOut", {}, null, "/login");
+    return actionSuccess(actionName, {}, null, "/login");
 };
 
 export default signOut;

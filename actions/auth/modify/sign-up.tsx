@@ -6,6 +6,8 @@ import { createClient } from "@/utils/supabase/server";
 import { headers } from "next/headers";
 
 const signUp = async (formData: FormData) => {
+    const actionName = "signUp";
+
     const email = formData.get("email");
     const first_name = formData.get("first_name");
     const last_name = formData.get("last_name");
@@ -21,7 +23,7 @@ const signUp = async (formData: FormData) => {
         typeof password_confirm !== "string" ||
         !(avatarFile instanceof File)
     )
-        return actionError("signUp", {}, null, "/register?message=Invalid form data");
+        return actionError(actionName, {}, null, "/register?message=Invalid form data");
 
     const origin = headers().get("origin");
 
@@ -40,7 +42,7 @@ const signUp = async (formData: FormData) => {
 
     const queryParamsString = queryParams.toString();
 
-    if (queryParamsString) return actionError("signUp", { queryParams }, null, `/register?${queryParamsString}`);
+    if (queryParamsString) return actionError(actionName, { queryParams }, null, `/register?${queryParamsString}`);
 
     const bucket = supabase.storage.from("avatars");
     const fileName = `${Date.now()}`;
@@ -62,13 +64,11 @@ const signUp = async (formData: FormData) => {
         },
     });
 
-    if (error) return actionError("signUp", { error }, null, `/register?message=${error.message}`);
+    if (error) return actionError(actionName, { error }, null, `/register?message=${error.message}`);
 
-    const { data: avatar } = await bucket.upload(fileName, avatarFile);
+    await bucket.upload(fileName, avatarFile);
 
-    if (!avatar) return actionError("signUp", { error: "Couldn't finish sign up (Avatar Upload Error)" });
-
-    return actionSuccess("signUp", {}, null, "/");
+    return actionSuccess(actionName, {}, null, "/");
 };
 
 export default signUp;

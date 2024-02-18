@@ -5,11 +5,13 @@ import actionSuccess from "@/utils/actions/action-success";
 import { createClient } from "@/utils/supabase/server";
 
 const signIn = async (formData: FormData) => {
+    const actionName = "signIn";
+
     const email = formData.get("email");
     const password = formData.get("password");
 
     if (typeof email !== "string" || typeof password !== "string")
-        return actionError("signIn", {}, null, "/login?message=Invalid Email or Password");
+        return actionError(actionName, {}, null, "/login?message=Invalid Email or Password");
 
     const supabase = createClient();
 
@@ -18,9 +20,9 @@ const signIn = async (formData: FormData) => {
         password,
     });
 
-    if (error) return actionError("signIn", {}, null, "/login?message=Invalid Email or Password");
+    if (error) return actionError(actionName, {}, null, "/login?message=Invalid Email or Password");
 
-    return actionSuccess("signIn", {}, null, "/");
+    return actionSuccess(actionName, {}, null, "/");
 };
 
 export default signIn;

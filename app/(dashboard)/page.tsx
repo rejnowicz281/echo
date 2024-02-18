@@ -2,11 +2,9 @@ import addPost from "@/actions/posts/modify/add-post";
 import getAllPosts from "@/actions/posts/read/get-all-posts";
 import ImagePicker from "@/components/general/image-picker";
 import SubmitButton from "@/components/general/submit-button";
-import WelcomeText from "@/components/general/welcome-text";
 import DeletePostButton from "@/components/posts/delete-post-button";
 import userDisplayName from "@/utils/general/user-display-name";
 import Image from "next/image";
-import Link from "next/link";
 
 const Home = async () => {
     const data = await getAllPosts();
@@ -18,11 +16,6 @@ const Home = async () => {
 
     return (
         <>
-            <WelcomeText />
-            <div>
-                <Link href="/settings">Settings</Link>
-            </div>
-
             <h1>house page</h1>
 
             <form action={addPost}>

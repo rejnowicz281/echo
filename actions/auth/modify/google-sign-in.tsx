@@ -6,6 +6,8 @@ import { createClient } from "@/utils/supabase/server";
 import { headers } from "next/headers";
 
 const googleSignIn = async () => {
+    const actionName = "googleSignIn";
+
     const origin = headers().get("origin");
 
     const supabase = createClient();
@@ -17,9 +19,9 @@ const googleSignIn = async () => {
         },
     });
 
-    if (error) return actionError("googleSignIn", {}, null, "/login?message=Could not authenticate user");
+    if (error) return actionError(actionName, {}, null, "/login?message=Could not authenticate user");
 
-    return actionSuccess("googleSignIn", {}, null, data.url);
+    return actionSuccess(actionName, {}, null, data.url);
 };
 
 export default googleSignIn;

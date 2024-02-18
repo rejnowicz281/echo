@@ -5,6 +5,8 @@ import actionSuccess from "@/utils/actions/action-success";
 import { createClient } from "@/utils/supabase/server";
 
 const demoLogin = async () => {
+    const actionName = "demoLogin";
+
     const supabase = createClient();
 
     const { error } = await supabase.auth.signInWithPassword({
@@ -12,9 +14,9 @@ const demoLogin = async () => {
         password: "123456",
     });
 
-    if (error) return actionError("demoLogin", {}, null, "/login?message=Could not authenticate user");
+    if (error) return actionError(actionName, {}, null, "/login?message=Could not authenticate user");
 
-    return actionSuccess("demoLogin", {}, null, "/");
+    return actionSuccess(actionName, {}, null, "/");
 };
 
 export default demoLogin;

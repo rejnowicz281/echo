@@ -1,6 +1,6 @@
 "use client";
 
-import User from "@/types/user";
+import { User } from "@/types/users";
 import { FC, createContext, useContext } from "react";
 
 export type AuthProviderProps = {
