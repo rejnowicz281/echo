@@ -9,8 +9,13 @@ const addPost = async (formData: FormData) => {
 
     const text = formData.get("text") || null;
     const imageFile = formData.get("image");
+    const parent_post = formData.get("parent_post") || null;
 
-    if ((typeof text !== "string" && text !== null) || !(imageFile instanceof File))
+    if (
+        (typeof text !== "string" && text !== null) ||
+        !(imageFile instanceof File) ||
+        (typeof parent_post !== "string" && parent_post !== null)
+    )
         return actionError(actionName, { error: "Invalid form data" });
 
     const supabase = createClient();
@@ -27,7 +32,14 @@ const addPost = async (formData: FormData) => {
     const image_url =
         imageFile && imageFile.type.startsWith("image/") ? bucket.getPublicUrl(fileName).data.publicUrl : null;
 
-    const { data: post } = await supabase.from("posts").insert([{ text, creator: user.id, image_url }]);
+    const { data: post } = await supabase.from("posts").insert([
+        {
+            text,
+            creator: user.id,
+            image_url,
+            parent_post,
+        },
+    ]);
 
     await bucket.upload(fileName, imageFile);
 

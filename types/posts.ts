@@ -6,6 +6,6 @@ export type Post = {
     image_url: string;
     creator: User | string; // User type or user id
     created_at: string;
+    replies: Post[];
+    parent_post?: string;
 };
-
-export type Posts = Post[];

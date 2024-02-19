@@ -4,13 +4,15 @@ import SubmitButton from "../general/submit-button";
 
 export type DeletePostButtonProps = {
     id: string;
+    content?: string;
+    loading?: string;
 };
 
-const DeletePostButton: FC<DeletePostButtonProps> = ({ id }) => {
+const DeletePostButton: FC<DeletePostButtonProps> = ({ id, content = "Delete Post", loading = "Deleting Post..." }) => {
     return (
         <form action={deletePost}>
             <input type="hidden" name="id" value={id} />
-            <SubmitButton content="Delete Post" loading="Deleting..." />
+            <SubmitButton content={content} loading={loading} />
         </form>
     );
 };
