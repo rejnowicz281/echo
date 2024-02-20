@@ -1,8 +1,14 @@
+import { User } from "@/types/users";
 import actionError from "@/utils/actions/action-error";
+import { ActionResponse } from "@/utils/actions/action-response";
 import actionSuccess from "@/utils/actions/action-success";
 import { createClient } from "@/utils/supabase/server";
 
-const getAllUsers = async () => {
+export type UsersActionResponse = ActionResponse & {
+    users?: User[];
+};
+
+const getAllUsers = async (): Promise<UsersActionResponse> => {
     const actionName = "getAllUsers";
 
     const supabase = createClient();

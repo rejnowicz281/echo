@@ -1,8 +1,17 @@
+import { Friendship } from "@/types/friendships";
+import { User } from "@/types/users";
 import actionError from "@/utils/actions/action-error";
+import { ActionResponse } from "@/utils/actions/action-response";
 import actionSuccess from "@/utils/actions/action-success";
 import { createClient } from "@/utils/supabase/server";
 
-const getUser = async (id: string) => {
+export type UserType = User & { friendship: Friendship };
+
+export type UserActionResponse = ActionResponse & {
+    user?: UserType;
+};
+
+const getUser = async (id: string): Promise<UserActionResponse> => {
     const actionName = "getUser";
 
     const supabase = createClient();

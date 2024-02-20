@@ -2,9 +2,16 @@ import getUser from "@/actions/auth/read/get-user";
 import FriendshipContainer from "@/components/users/friendship-container";
 import userDisplayName from "@/utils/general/user-display-name";
 import Image from "next/image";
+import { FC } from "react";
 
-const UserPage = async ({ params: { id } }) => {
+export type UserPageProps = {
+    params: { id: string };
+};
+
+const UserPage: FC<UserPageProps> = async ({ params: { id } }) => {
     const { user } = await getUser(id);
+
+    if (!user) return <div>There was an error fetching the user</div>;
 
     return (
         <>

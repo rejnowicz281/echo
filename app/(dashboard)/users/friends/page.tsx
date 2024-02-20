@@ -5,6 +5,8 @@ import Link from "next/link";
 const FriendsPage = async () => {
     const { friends } = await getAllFriends();
 
+    if (!friends) return <div>There was an error fetching your friends</div>;
+
     return (
         <ul>
             {friends.map((friend) => (
