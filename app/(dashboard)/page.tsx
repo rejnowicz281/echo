@@ -1,5 +1,6 @@
 import getAllPosts from "@/actions/posts/read/get-all-posts";
-import PostsContainer from "@/components/posts/posts-container";
+import PostForm from "@/components/posts/post-form";
+import PostsList from "@/components/posts/posts-list";
 
 const Home = async () => {
     const data = await getAllPosts();
@@ -13,7 +14,8 @@ const Home = async () => {
         <>
             <h1>house page</h1>
 
-            <PostsContainer posts={posts} />
+            <PostForm />
+            <PostsList posts={posts} />
         </>
     );
 };

@@ -7,5 +7,6 @@ export type Post = {
     creator: User | string; // User type or user id
     created_at: string;
     replies: Post[];
+    reply_count: number;
     parent_post?: string;
 };
