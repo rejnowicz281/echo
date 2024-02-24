@@ -1,7 +1,10 @@
 import getUser from "@/actions/auth/read/get-user";
-import FriendshipContainer from "@/components/users/friendship-container";
+import PresenceAvatar from "@/components/general/presence-avatar";
+import ConditionalPostForm from "@/components/user-profile/conditional-post-form";
+import FriendshipContainer from "@/components/user-profile/friendship-container";
+import PostsList from "@/components/user-profile/posts-list";
+import SettingsContainer from "@/components/user-profile/settings-container";
 import userDisplayName from "@/utils/general/user-display-name";
-import Image from "next/image";
 import { FC } from "react";
 
 export type UserPageProps = {
@@ -13,14 +16,25 @@ const UserPage: FC<UserPageProps> = async ({ params: { id } }) => {
 
     if (!user) return <div>There was an error fetching the user</div>;
 
+    const displayName = userDisplayName(user);
+
     return (
-        <>
-            <h1>{user.email}</h1>
-            <p>{userDisplayName(user)}</p>
-            <p>{user.id}</p>
-            <Image src={user.avatar_url} alt={userDisplayName(user)} width={150} height={150} />
+        <div className="p-12 mx-auto max-w-[800px] w-full flex flex-col gap-3">
+            <div className="word-break flex flex-col items-center gap-3">
+                <PresenceAvatar markerSize={23} avatarSize={100} userId={user.id} src={user.avatar_url} />
+                <div className="text-center">
+                    <div>{displayName}</div>
+                    {displayName !== user.email && <div className="text-gray-500">{user.email}</div>}
+                </div>
+            </div>
             <FriendshipContainer userVisited={user} />
-        </>
+            {user.id !== process.env.DEMO_USER_ID && <SettingsContainer user={user} />}
+
+            <div className="flex flex-col gap-10">
+                <ConditionalPostForm userId={user.id} />
+                <PostsList user={user} />
+            </div>
+        </div>
     );
 };
 

@@ -8,16 +8,20 @@ export type PostsActionResponse = ActionResponse & {
     posts?: Post[];
 };
 
-const getAllPosts = async (): Promise<PostsActionResponse> => {
-    const actionName = "getAllPosts";
+const getFeedPosts = async (): Promise<PostsActionResponse> => {
+    const actionName = "getFeedPosts";
 
     const supabase = createClient();
 
-    const { data: posts, error } = await supabase.rpc("get_posts_with_reply_count").select("*, creator:users(*)");
+    const { data: posts, error } = await supabase
+        .from("posts")
+        .select("*, creator:users(*)")
+        .order("created_at", { ascending: false })
+        .is("parent_post", null);
 
     if (error) return actionError(actionName, error);
 
     return actionSuccess(actionName, { posts });
 };
 
-export default getAllPosts;
+export default getFeedPosts;

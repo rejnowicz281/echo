@@ -1,8 +1,7 @@
 import getCurrentUser from "@/actions/auth/read/get-current-user";
-import WelcomeText from "@/components/general/welcome-text";
+import MainSidebar from "@/components/general/main-sidebar";
 import { AuthProvider } from "@/providers/auth-provider";
 import { PresenceProvider } from "@/providers/presence-provider";
-import Link from "next/link";
 import { FC } from "react";
 
 export type DashboardLayoutProps = {
@@ -15,20 +14,16 @@ const DashboardLayout: FC<DashboardLayoutProps> = async ({ children }) => {
     return (
         <AuthProvider user={user}>
             <PresenceProvider>
-                <WelcomeText />
-                <div>
-                    <Link href="/">Home</Link>
+                <div className="flex flex-row flex-1">
+                    <div className="relative flex basis-[400px] shrink-0">
+                        <div className="absolute overflow-auto inset-0">
+                            <MainSidebar />
+                        </div>
+                    </div>
+                    <div className="relative flex flex-1">
+                        <div className="absolute overflow-auto inset-0 flex flex-col">{children}</div>
+                    </div>
                 </div>
-                <div>
-                    <Link href="/settings">Settings</Link>
-                </div>
-                <div>
-                    <Link href="/users">All Users</Link>
-                </div>
-                <div>
-                    <Link href="/users/friends">Your friends</Link>
-                </div>
-                {children}
             </PresenceProvider>
         </AuthProvider>
     );

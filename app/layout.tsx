@@ -13,8 +13,8 @@ export type RootLayoutProps = {
 
 const RootLayout: FC<RootLayoutProps> = ({ children }) => {
     return (
-        <html lang="en">
-            <body>{children}</body>
+        <html className="h-full" lang="en">
+            <body className="min-h-full flex flex-col">{children}</body>
         </html>
     );
 };
