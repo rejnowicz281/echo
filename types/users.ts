@@ -5,4 +5,5 @@ export type User = {
     last_name?: string;
     avatar_url: string;
     created_at: string;
+    provider?: string;
 };

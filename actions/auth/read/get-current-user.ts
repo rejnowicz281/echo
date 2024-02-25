@@ -19,6 +19,7 @@ const getCurrentUser = async () => {
         last_name: data.user.user_metadata.last_name,
         avatar_url: data.user.user_metadata.avatar_url,
         created_at: data.user.created_at,
+        provider: data.user.app_metadata.provider,
     };
 
     return actionSuccess(actionName, { user });

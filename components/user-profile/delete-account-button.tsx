@@ -1,4 +1,5 @@
 import deleteAccount from "@/actions/auth/modify/delete-account";
+import { MdDelete } from "react-icons/md";
 import SubmitButton from "../general/submit-button";
 import {
     AlertDialog,
@@ -18,8 +19,12 @@ const DeleteAccountButton = () => {
         <>
             <AlertDialog>
                 <AlertDialogTrigger asChild>
-                    <Button variant="ghost" className="text-red-500 hover:text-red-600">
-                        Delete your account
+                    <Button
+                        variant="ghost"
+                        className="text-red-500 hover:text-red-600 flex flex-row items-center gap-2"
+                    >
+                        <MdDelete />
+                        Delete Account
                     </Button>
                 </AlertDialogTrigger>
                 <AlertDialogContent>
