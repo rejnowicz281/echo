@@ -27,6 +27,9 @@ const UserPage: FC<UserPageProps> = async ({ params: { id } }) => {
                     {displayName !== user.email && <div className="text-gray-500">{user.email}</div>}
                 </div>
             </div>
+            <div className="text-center text-sm text-gray-500">
+                Member since {new Date(user.created_at).toLocaleDateString()}
+            </div>
             <FriendshipContainer userVisited={user} />
             {user.id !== process.env.DEMO_USER_ID && <SettingsContainer user={user} />}
 
