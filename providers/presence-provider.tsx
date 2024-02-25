@@ -43,7 +43,7 @@ export const PresenceProvider: FC<PresenceProviderProps> = ({ children }) => {
         presenceChannel
             .on("presence", { event: "sync" }, () => {
                 const newState: RealtimePresenceState<PresenceStateType> = presenceChannel.presenceState();
-                console.log("sync", newState);
+
                 const newStateArray = Object.values(newState).map((arr) => arr[0].user_id);
                 const pushArray = removeDuplicates(newStateArray);
                 setLoggedUsers(pushArray);
@@ -53,10 +53,7 @@ export const PresenceProvider: FC<PresenceProviderProps> = ({ children }) => {
                     return;
                 }
 
-                if (presenceEnabled && user) {
-                    const presenceTrackStatus = await presenceChannel.track({ user_id: user.id });
-                    console.log("Presence Track Status -", presenceTrackStatus);
-                }
+                if (presenceEnabled && user) await presenceChannel.track({ user_id: user.id });
             });
 
         return () => {

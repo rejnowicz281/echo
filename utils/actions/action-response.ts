@@ -19,8 +19,10 @@ const actionResponse = (
         success,
         ...additionalData,
     };
-    if (success) console.log(data);
-    else console.error(data);
+    if (process.env.NODE_ENV !== "production") {
+        if (success) console.log(data);
+        else console.error(data);
+    }
 
     if (redirectPath) redirect(redirectPath);
     if (revalidatePath) revalidate(revalidatePath, "page");
