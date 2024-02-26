@@ -1,6 +1,7 @@
 import { Post } from "@/types/posts";
 import formatCreateDate from "@/utils/general/format-create-date";
 import userDisplayName from "@/utils/general/user-display-name";
+import Image from "next/image";
 import Link from "next/link";
 import { FC } from "react";
 import PresenceAvatar from "../general/presence-avatar";
@@ -37,7 +38,16 @@ const PostContent: FC<PostContentProps> = ({ post }) => {
             </div>
             <div className="py-3 flex flex-col gap-3">
                 {post.text && <p className="text-xl">{post.text}</p>}
-                {post.image_url && <img src={post.image_url} alt="post image" className="w-full rounded-lg h-auto" />}
+                {post.image_url && (
+                    <Image
+                        src={post.image_url}
+                        alt="Post Image"
+                        width={0}
+                        height={0}
+                        sizes="100vw"
+                        className="rounded-lg w-full h-auto"
+                    />
+                )}
             </div>
             <div className="text-gray-500">{formatCreateDate(post.created_at)}</div>
         </div>
