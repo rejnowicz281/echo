@@ -12,9 +12,15 @@ export type ImagePickerProps = {
 
 const ImagePicker: FC<ImagePickerProps> = ({ initialImage }) => {
     const [selectedImage, setSelectedImage] = useState<string | null>(initialImage || null);
+
+    // if initial image is present and it hasn't been changed or removed, this will be true
+    const [imageUploadDisabled, setImageUploadDisabled] = useState<boolean>(Boolean(initialImage));
+
     const inputRef = useRef<HTMLInputElement>(null);
 
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setImageUploadDisabled(false);
+
         if (e.target.files && e.target.files[0]) {
             const reader = new FileReader();
 
@@ -27,6 +33,8 @@ const ImagePicker: FC<ImagePickerProps> = ({ initialImage }) => {
     };
 
     const handleRemoveImage = () => {
+        setImageUploadDisabled(false);
+
         setSelectedImage(null);
         if (inputRef.current) inputRef.current.value = "";
     };
@@ -49,6 +57,7 @@ const ImagePicker: FC<ImagePickerProps> = ({ initialImage }) => {
                 accept="image/*"
                 onChange={handleImageChange}
             />
+            {imageUploadDisabled && <input type="hidden" name="image_upload_disabled" value="true" />}
             {selectedImage && (
                 <>
                     <Button variant="ghost" className="rounded-[50%] hover:bg-gray-200 p-2" onClick={handleRemoveImage}>

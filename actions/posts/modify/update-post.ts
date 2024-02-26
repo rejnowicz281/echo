@@ -11,7 +11,6 @@ const updatePost = async (formData: FormData, postData: Post) => {
     const supabase = createClient();
 
     const textFormData = formData.get("text");
-    const imageFormData = formData.get("image");
 
     const id = postData.id;
     const text = (() => {
@@ -23,7 +22,8 @@ const updatePost = async (formData: FormData, postData: Post) => {
             return trimmed;
         } else return null;
     })();
-    const imageFile = imageFormData instanceof File ? imageFormData : null;
+
+    const imageUploadDisabled = formData.get("image_upload_disabled") === "true";
 
     const {
         data: { user },
@@ -37,38 +37,45 @@ const updatePost = async (formData: FormData, postData: Post) => {
     } = {};
 
     if (text !== postData.text) updateData["text"] = text;
-    if (imageFile?.size === 0 && postData.image_url !== null) {
-        // get name of current image
-        const currentImage = postData.image_url.split("/").pop() || "";
+    if (!imageUploadDisabled) {
+        const imageFormData = formData.get("image");
 
-        // remove current image
-        const bucket = supabase.storage.from("posts_images");
-        const { error } = await bucket.remove([currentImage]);
+        const imageFile =
+            imageFormData instanceof File && imageFormData.type.startsWith("image/") ? imageFormData : null;
 
-        if (error) return actionError(actionName, { error: error.message });
-
-        updateData.image_url = null;
-    } else if (imageFile?.type.startsWith("image/")) {
-        const bucket = supabase.storage.from("posts_images");
-
-        const fileName = `${Date.now()}`;
-
-        const image_url = bucket.getPublicUrl(fileName).data.publicUrl;
-
-        // upload new post image
-        const { error } = await bucket.upload(fileName, imageFile);
-        if (error) return actionError(actionName, { error: error.message });
-
-        // remove current post image if it exists
-        if (postData.image_url !== null) {
+        if (imageFile === null && postData.image_url !== null) {
+            // get name of current image
             const currentImage = postData.image_url.split("/").pop() || "";
 
+            // remove current image
+            const bucket = supabase.storage.from("posts_images");
             const { error } = await bucket.remove([currentImage]);
-            if (error) return actionError(actionName, { error: error.message });
-        }
 
-        // update image_url
-        updateData.image_url = image_url;
+            if (error) return actionError(actionName, { error: error.message });
+
+            updateData.image_url = null;
+        } else if (imageFile) {
+            const bucket = supabase.storage.from("posts_images");
+
+            const fileName = `${Date.now()}`;
+
+            const image_url = bucket.getPublicUrl(fileName).data.publicUrl;
+
+            // upload new post image
+            const { error } = await bucket.upload(fileName, imageFile);
+            if (error) return actionError(actionName, { error: error.message });
+
+            // remove current post image if it exists
+            if (postData.image_url !== null) {
+                const currentImage = postData.image_url.split("/").pop() || "";
+
+                const { error } = await bucket.remove([currentImage]);
+                if (error) return actionError(actionName, { error: error.message });
+            }
+
+            // update image_url
+            updateData.image_url = image_url;
+        }
     }
 
     if (Object.keys(updateData).length === 0) return actionError(actionName, { error: "No changes were made." });
