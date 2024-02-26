@@ -33,7 +33,7 @@ const PostForm: FC<PostFormProps> = ({
                 placeholder={placeholder}
             ></Textarea>
             <div className="flex flex-row gap-2 justify-end">
-                <ImagePicker />
+                <ImagePicker initialImage={initialPost?.image_url} />
                 <Button className="w-[90px] rounded-2xl border font-bold" variant="ghost" asChild>
                     <SubmitButton
                         content={content}

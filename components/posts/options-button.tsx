@@ -1,6 +1,7 @@
 "use client";
 
 import deletePost from "@/actions/posts/modify/delete-post";
+import updatePost from "@/actions/posts/modify/update-post";
 import {
     Dialog,
     DialogContent,
@@ -58,10 +59,10 @@ const OptionsButton: FC<OptionsButtonProps> = ({ post }) => {
         else setDeleteOpen(false);
     };
 
-    const handleEdit = async () => {
-        await new Promise((resolve) => setTimeout(resolve, 1000));
+    const handleEdit = async (formData: FormData) => {
+        const res = await updatePost(formData, post);
 
-        setEditOpen(false);
+        if (res.success) setEditOpen(false);
     };
 
     return (

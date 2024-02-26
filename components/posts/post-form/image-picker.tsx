@@ -2,12 +2,16 @@
 
 import { Button } from "@/components/shadcn/ui/button";
 import Image from "next/image";
-import { useRef, useState } from "react";
+import { FC, useRef, useState } from "react";
 import { FaRegImage } from "react-icons/fa6";
 import { MdCancel } from "react-icons/md";
 
-const ImagePicker = () => {
-    const [selectedImage, setSelectedImage] = useState<string | null>(null);
+export type ImagePickerProps = {
+    initialImage?: string;
+};
+
+const ImagePicker: FC<ImagePickerProps> = ({ initialImage }) => {
+    const [selectedImage, setSelectedImage] = useState<string | null>(initialImage || null);
     const inputRef = useRef<HTMLInputElement>(null);
 
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
