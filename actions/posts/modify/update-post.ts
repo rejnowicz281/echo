@@ -23,7 +23,7 @@ const updatePost = async (formData: FormData, postData: Post) => {
             return trimmed;
         } else return null;
     })();
-    const imageFile = imageFormData instanceof File && imageFormData.type.startsWith("image/") ? imageFormData : null;
+    const imageFile = imageFormData instanceof File ? imageFormData : null;
 
     const {
         data: { user },
@@ -36,8 +36,8 @@ const updatePost = async (formData: FormData, postData: Post) => {
         image_url?: string | null;
     } = {};
 
-    if (text && text !== postData.text) updateData["text"] = text;
-    if (postData.image_url !== null && imageFile && imageFile.size === 0) {
+    if (text !== postData.text) updateData["text"] = text;
+    if (imageFile?.size === 0 && postData.image_url !== null) {
         // get name of current image
         const currentImage = postData.image_url.split("/").pop() || "";
 
@@ -48,7 +48,7 @@ const updatePost = async (formData: FormData, postData: Post) => {
         if (error) return actionError(actionName, { error: error.message });
 
         updateData.image_url = null;
-    } else if (imageFile) {
+    } else if (imageFile?.type.startsWith("image/")) {
         const bucket = supabase.storage.from("posts_images");
 
         const fileName = `${Date.now()}`;
