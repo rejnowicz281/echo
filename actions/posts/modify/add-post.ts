@@ -7,16 +7,21 @@ import { createClient } from "@/utils/supabase/server";
 const addPost = async (formData: FormData) => {
     const actionName = "addPost";
 
-    const text = formData.get("text") || null;
-    const imageFile = formData.get("image");
-    const parent_post = formData.get("parent_post") || null;
+    const textFormData = formData.get("text");
+    const imageFormData = formData.get("image");
+    const parentPostFormData = formData.get("parent_post");
 
-    if (
-        (typeof text !== "string" && text !== null) ||
-        !(imageFile instanceof File) ||
-        (typeof parent_post !== "string" && parent_post !== null)
-    )
-        return actionError(actionName, { error: "Invalid form data" });
+    const text = (() => {
+        if (typeof textFormData === "string") {
+            const trimmed = textFormData.trim();
+
+            if (trimmed === "") return null;
+
+            return trimmed;
+        } else return null;
+    })();
+    const imageFile = imageFormData instanceof File && imageFormData.type.startsWith("image/") ? imageFormData : null;
+    const parent_post = parentPostFormData === "string" ? parentPostFormData : null;
 
     const supabase = createClient();
 
@@ -26,13 +31,21 @@ const addPost = async (formData: FormData) => {
 
     if (!user) return actionError(actionName, { error: "You must be logged in to add a post" });
 
-    const bucket = supabase.storage.from("posts_images");
-    const fileName = `${Date.now()}`;
+    const imageData = (() => {
+        if (imageFile) {
+            const bucket = supabase.storage.from("posts_images");
+            const fileName = `${Date.now()}`;
+            const image_url = bucket.getPublicUrl(fileName).data.publicUrl;
 
-    const image_url =
-        imageFile && imageFile.type.startsWith("image/") ? bucket.getPublicUrl(fileName).data.publicUrl : null;
+            return { bucket, fileName, image_url };
+        }
 
-    const { data: post } = await supabase.from("posts").insert([
+        return { image_url: null };
+    })();
+
+    const { bucket, fileName, image_url } = imageData;
+
+    const { error } = await supabase.from("posts").insert([
         {
             text,
             creator: user.id,
@@ -40,10 +53,14 @@ const addPost = async (formData: FormData) => {
             parent_post,
         },
     ]);
+    if (error) return actionError(actionName, { error: error.message });
 
-    await bucket.upload(fileName, imageFile);
+    if (bucket && fileName && imageFile) {
+        const { error } = await bucket.upload(fileName, imageFile);
+        if (error) return actionError(actionName, { error: error.message });
+    }
 
-    return actionSuccess(actionName, { post }, "/");
+    return actionSuccess(actionName, {}, "/");
 };
 
 export default addPost;

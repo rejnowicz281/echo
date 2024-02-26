@@ -20,19 +20,20 @@ const updateAccount = async (formData: FormData) => {
 
     const isEmailProvider = user.app_metadata.provider === "email";
 
-    const first_name = formData.get("first_name") || "";
-    const last_name = formData.get("last_name") || "";
-    const password = isEmailProvider ? formData.get("password") : "";
-    const resetAvatar = formData.get("reset_avatar") === "on";
-    const avatarFile = isEmailProvider ? formData.get("avatar") : null;
+    const firstNameFormData = formData.get("first_name");
+    const lastNameFormData = formData.get("last_name");
+    const passwordFormData = formData.get("password");
+    const avatarFileFormData = formData.get("avatar");
 
-    if (
-        typeof first_name !== "string" ||
-        typeof last_name !== "string" ||
-        typeof password !== "string" ||
-        (!(avatarFile instanceof File) && avatarFile !== null)
-    )
-        return actionError(actionName, { error: "Invalid form data." });
+    const first_name = typeof firstNameFormData === "string" ? firstNameFormData.trim() : null;
+    const last_name = typeof lastNameFormData === "string" ? lastNameFormData.trim() : null;
+    const password = isEmailProvider && typeof passwordFormData === "string" ? passwordFormData.trim() : null;
+    const avatarFile =
+        isEmailProvider && avatarFileFormData instanceof File && avatarFileFormData.type.startsWith("image/")
+            ? formData.get("avatar")
+            : null;
+
+    const resetAvatar = formData.get("reset_avatar") === "on";
 
     let updateData: {
         data: {
@@ -61,7 +62,7 @@ const updateAccount = async (formData: FormData) => {
             updateData.data.avatar_url =
                 "https://trvvoqhvriwitcyitfid.supabase.co/storage/v1/object/public/avatars/default_avatar.jpg";
         }
-    } else if (avatarFile && avatarFile.type.startsWith("image/")) {
+    } else if (avatarFile) {
         const bucket = supabase.storage.from("avatars");
 
         const fileName = `${Date.now()}`;
@@ -95,7 +96,8 @@ const updateAccount = async (formData: FormData) => {
 
     if (password) actionData.password = "********";
 
-    const revalidatePath = (first_name && last_name) || updateData.data?.avatar_url ? "/" : null;
+    const revalidatePath =
+        updateData.data?.first_name || updateData.data?.last_name || updateData.data?.avatar_url ? "/" : null;
 
     return actionSuccess(actionName, actionData, revalidatePath);
 };

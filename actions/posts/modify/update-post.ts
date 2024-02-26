@@ -10,12 +10,20 @@ const updatePost = async (formData: FormData, postData: Post) => {
 
     const supabase = createClient();
 
-    const id = postData.id;
-    const text = formData.get("text") || "";
-    const imageFile = formData.get("image");
+    const textFormData = formData.get("text");
+    const imageFormData = formData.get("image");
 
-    if (typeof id !== "string" || typeof text !== "string" || (!(imageFile instanceof File) && imageFile !== null))
-        return actionError(actionName, { error: "Invalid form data." });
+    const id = postData.id;
+    const text = (() => {
+        if (typeof textFormData === "string") {
+            const trimmed = textFormData.trim();
+
+            if (trimmed === "") return null;
+
+            return trimmed;
+        } else return null;
+    })();
+    const imageFile = imageFormData instanceof File && imageFormData.type.startsWith("image/") ? imageFormData : null;
 
     const {
         data: { user },
@@ -24,7 +32,7 @@ const updatePost = async (formData: FormData, postData: Post) => {
     if (!user) return actionError(actionName, { error: "You must be logged in to proceed." });
 
     let updateData: {
-        text?: string;
+        text?: string | null;
         image_url?: string | null;
     } = {};
 
@@ -40,7 +48,7 @@ const updatePost = async (formData: FormData, postData: Post) => {
         if (error) return actionError(actionName, { error: error.message });
 
         updateData.image_url = null;
-    } else if (imageFile && imageFile.type.startsWith("image/")) {
+    } else if (imageFile) {
         const bucket = supabase.storage.from("posts_images");
 
         const fileName = `${Date.now()}`;
