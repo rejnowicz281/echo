@@ -13,13 +13,36 @@ const getFeedPosts = async (): Promise<PostsActionResponse> => {
 
     const supabase = createClient();
 
-    const { data: posts, error } = await supabase
+    const {
+        data: { user },
+    } = await supabase.auth.getUser();
+
+    if (!user) return actionError(actionName, { error: "You must be logged in" });
+
+    const { data: friendships, error: friendshipsError } = await supabase
+        .from("friendships")
+        .select("requester, recipient")
+        .or(`requester.eq.${user.id}, recipient.eq.${user.id})`)
+        .is("accepted", true)
+        .order("created_at", { ascending: false });
+
+    if (friendshipsError) return actionError(actionName, { error: friendshipsError.message });
+
+    const users = friendships.map((friendship) =>
+        friendship.requester === user.id ? friendship.recipient : friendship.requester
+    );
+
+    users.push(user.id);
+
+    // get posts of friends and current user
+    const { data: posts, error: postsError } = await supabase
         .from("posts")
         .select("*, creator:users(*)")
-        .order("created_at", { ascending: false })
-        .is("parent_post", null);
+        .in("creator", users)
+        .is("parent_post", null)
+        .order("created_at", { ascending: false });
 
-    if (error) return actionError(actionName, error);
+    if (postsError) return actionError(actionName, { error: postsError.message });
 
     return actionSuccess(actionName, { posts });
 };
