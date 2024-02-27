@@ -21,7 +21,7 @@ const addPost = async (formData: FormData) => {
         } else return null;
     })();
     const imageFile = imageFormData instanceof File && imageFormData.type.startsWith("image/") ? imageFormData : null;
-    const parent_post = parentPostFormData === "string" ? parentPostFormData : null;
+    const parent_post = typeof parentPostFormData === "string" ? parentPostFormData : null;
 
     const supabase = createClient();
 
