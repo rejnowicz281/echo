@@ -37,7 +37,7 @@ const PostContent: FC<PostContentProps> = ({ post }) => {
                 <OptionsButton post={post} />
             </div>
             <div className="py-3 flex flex-col gap-3">
-                {post.text && <p className="text-xl">{post.text}</p>}
+                {post.text && <p className="text-xl whitespace-pre-line">{post.text}</p>}
                 {post.image_url && (
                     <Image
                         src={post.image_url}
