@@ -37,7 +37,7 @@ const getDiscoveryPosts = async (): Promise<PostsActionResponse> => {
 
     // get posts of everyone except friends and current user
     const { data: posts, error: postsError } = await supabase
-        .from("posts_with_like")
+        .from("posts_with_details")
         .select("*, creator:users(*)")
         .not("creator", "in", `(${users.join(",")})`)
         .is("parent_post", null);

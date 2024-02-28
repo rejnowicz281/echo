@@ -1,6 +1,7 @@
 import getPost from "@/actions/posts/read/get-post";
 import PostContainer from "@/components/posts/post-container";
 import PostForm from "@/components/posts/post-form";
+import userDisplayName from "@/utils/general/user-display-name";
 import Link from "next/link";
 import { FC } from "react";
 import { IoMdArrowRoundBack } from "react-icons/io";
@@ -21,7 +22,11 @@ const PostPage: FC<PostPageProps> = async ({ params: { id } }) => {
                 href={post.parent_post ? `/posts/${post.parent_post}` : "/"}
             >
                 <IoMdArrowRoundBack className="text-2xl" />
-                {post.parent_post ? "Parent Post" : "Home"}
+                {post.parent_post
+                    ? post.parent_post_creator
+                        ? `Replying to ${userDisplayName(post.parent_post_creator)}`
+                        : "Parent Post"
+                    : "Home"}
             </Link>
 
             <div className="flex flex-col gap-6">

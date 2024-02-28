@@ -10,4 +10,9 @@ export type Post = {
     like_count: number;
     like: string;
     parent_post?: string;
+    parent_post_creator?: {
+        email: string;
+        first_name?: string;
+        last_name?: string;
+    };
 };
