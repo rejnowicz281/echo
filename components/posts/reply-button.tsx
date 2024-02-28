@@ -1,5 +1,6 @@
 import AddPostButton from "@/components/posts/add-post-button";
 import { Post } from "@/types/posts";
+import formatBigNumbers from "@/utils/general/format-big-numbers";
 import userDisplayName from "@/utils/general/user-display-name";
 import { FC } from "react";
 import { FaRegComment } from "react-icons/fa6";
@@ -23,7 +24,7 @@ const ReplyButton: FC<ReplyButtonProps> = ({ post }) => {
                 parent_post={post.id}
                 content="Reply"
             />
-            <div>{post.reply_count}</div>
+            <div>{formatBigNumbers(post.reply_count)}</div>
         </div>
     );
 };

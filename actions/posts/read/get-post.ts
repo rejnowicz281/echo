@@ -15,9 +15,10 @@ const getPost = async (id: string): Promise<PostActionResponse> => {
 
     // get post that has same id as the one passed in or parent_post
     const { data: posts, error } = await supabase
-        .from("posts")
+        .from("posts_with_like")
         .select("*, creator:users(*)")
-        .or(`id.eq.${id}, parent_post.eq.${id}`);
+        .or(`id.eq.${id}, parent_post.eq.${id}`)
+        .order("created_at", { ascending: false });
 
     if (error) return actionError(actionName, error);
 

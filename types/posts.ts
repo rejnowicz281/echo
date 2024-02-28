@@ -7,5 +7,7 @@ export type Post = {
     creator: User;
     created_at: string;
     reply_count: number;
+    like_count: number;
+    like: string;
     parent_post?: string;
 };

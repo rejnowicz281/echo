@@ -36,7 +36,7 @@ const getFeedPosts = async (): Promise<PostsActionResponse> => {
 
     // get posts of friends and current user
     const { data: posts, error: postsError } = await supabase
-        .from("posts")
+        .from("posts_with_like")
         .select("*, creator:users(*)")
         .in("creator", users)
         .is("parent_post", null)

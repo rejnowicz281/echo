@@ -30,7 +30,7 @@ const getUser = async (id: string): Promise<UserActionResponse> => {
 
     const userPostsInfoQuery = () =>
         supabase
-            .from("posts")
+            .from("posts_with_like")
             .select("*")
             .eq("creator", id)
             .is("parent_post", null)

@@ -1,8 +1,6 @@
 import getPost from "@/actions/posts/read/get-post";
 import PostContainer from "@/components/posts/post-container";
-import PostContent from "@/components/posts/post-content";
 import PostForm from "@/components/posts/post-form";
-import ReplyButton from "@/components/posts/reply-button";
 import Link from "next/link";
 import { FC } from "react";
 import { IoMdArrowRoundBack } from "react-icons/io";
@@ -25,15 +23,12 @@ const PostPage: FC<PostPageProps> = async ({ params: { id } }) => {
                 <IoMdArrowRoundBack className="text-2xl" />
                 {post.parent_post ? "Parent Post" : "Home"}
             </Link>
-            <div className="flex flex-col gap-3">
-                <PostContent post={post} />
 
-                <div className="flex flex-col gap-6">
-                    <ReplyButton post={post} />
-
-                    <PostForm parent_post={id} content="Reply" placeholder="Reply to this post" />
-                </div>
+            <div className="flex flex-col gap-6">
+                <PostContainer post={post} asLink={false} />
+                <PostForm parent_post={id} content="Reply" placeholder="Reply to this post" />
             </div>
+
             {post.replies.length > 0 && post.replies.map((reply) => <PostContainer key={reply.id} post={reply} />)}
         </div>
     );
