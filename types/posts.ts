@@ -11,6 +11,7 @@ export type Post = {
     like: string;
     parent_post?: string;
     parent_post_creator?: {
+        id: string;
         email: string;
         first_name?: string;
         last_name?: string;

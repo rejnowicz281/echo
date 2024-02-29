@@ -1,13 +1,20 @@
-import getAllUsers from "@/actions/users/read/get-all-users";
+"use client";
+
 import PresenceAvatar from "@/components/general/presence-avatar";
+import useAuthContext from "@/providers/auth-provider";
 import { User } from "@/types/users";
 import userDisplayName from "@/utils/general/user-display-name";
 import Link from "next/link";
+import { FC } from "react";
+import useUserContext from "./user-provider";
 
-const UsersPage = async () => {
-    const { users } = await getAllUsers();
+export type FriendsListProps = {
+    friends: User[];
+};
 
-    if (!users) return <div>There was an error fetching the users</div>;
+const FriendsList: FC<FriendsListProps> = ({ friends }) => {
+    const { user: currentUser } = useAuthContext();
+    const { user } = useUserContext();
 
     const userSection = (user: User) => {
         const displayName = userDisplayName(user);
@@ -27,14 +34,23 @@ const UsersPage = async () => {
         );
     };
 
-    return (
-        <div className="p-16">
-            <h1 className="border-b mb-4 pb-4 text-center text-2xl">Users</h1>
-            <div className="flex-1 gap-4 flex flex-row justify-center flex-wrap">
-                {users.map((user) => userSection(user))}
+    return friends.length > 0 ? (
+        <div className="flex flex-col gap-2">
+            <h1 className="text-xl border-b pb-2 text-gray-500 text-center">Friends</h1>
+            <div className="gap-4 flex flex-row justify-center flex-wrap">
+                {friends.map((user) => userSection(user))}
             </div>
+        </div>
+    ) : (
+        <div className="text-center text-gray-500">
+            {currentUser.id === user.id
+                ? "You've got"
+                : user.first_name
+                ? `${user.first_name} has`
+                : `${user.email} has`}{" "}
+            no friends.
         </div>
     );
 };
 
-export default UsersPage;
+export default FriendsList;

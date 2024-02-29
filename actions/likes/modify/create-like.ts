@@ -9,7 +9,6 @@ const createLike = async (formData: FormData) => {
 
     const post = formData.get("post");
     const user = formData.get("user");
-    console.log(post, user);
 
     const supabase = createClient();
 

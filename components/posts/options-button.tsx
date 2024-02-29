@@ -70,7 +70,10 @@ const OptionsButton: FC<OptionsButtonProps> = ({ post }) => {
             <Dialog open={editOpen} onOpenChange={setEditOpen}>
                 <DropdownMenu modal={false}>
                     <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" className="z-10 hover:bg-gray-200 rounded-[50%]">
+                        <Button
+                            variant="ghost"
+                            className="absolute top-0 right-0 z-20 hover:bg-gray-200 rounded-bl-[50%]"
+                        >
                             <SlOptions />
                         </Button>
                     </DropdownMenuTrigger>

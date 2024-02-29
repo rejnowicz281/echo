@@ -1,3 +1,4 @@
+import getCurrentUser from "@/actions/auth/read/get-current-user";
 import { Friendship } from "@/types/friendships";
 import { Post } from "@/types/posts";
 import { User } from "@/types/users";
@@ -5,7 +6,6 @@ import actionError from "@/utils/actions/action-error";
 import { ActionResponse } from "@/utils/actions/action-response";
 import actionSuccess from "@/utils/actions/action-success";
 import { createClient } from "@/utils/supabase/server";
-import getCurrentUser from "./get-current-user";
 
 export type UserType = User & { friendship: Friendship; posts: Post[] };
 

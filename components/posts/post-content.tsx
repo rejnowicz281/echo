@@ -5,7 +5,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { FC } from "react";
 import PresenceAvatar from "../general/presence-avatar";
-import OptionsButton from "./options-button";
 
 export type PostContentProps = {
     post: Post;
@@ -17,24 +16,20 @@ const PostContent: FC<PostContentProps> = ({ post }) => {
 
     return (
         <div className="word-break">
-            <div className="flex flex-row items-center justify-between gap-3">
-                <div className="flex flex-row gap-3 items-center">
-                    <Link href={`/users/${creator.id}`} className="z-10 hover:opacity-80 transition-opacity">
-                        <PresenceAvatar avatarSize={50} markerSize={13} userId={creator.id} src={creator.avatar_url} />
+            <div className="flex flex-row gap-3 items-center">
+                <Link href={`/users/${creator.id}`} className="z-10 hover:opacity-80 transition-opacity">
+                    <PresenceAvatar avatarSize={50} markerSize={13} userId={creator.id} src={creator.avatar_url} />
+                </Link>
+                <div className="flex flex-col justify-center">
+                    <Link href={`/users/${creator.id}`} className="z-10 hover:underline">
+                        {creatorDisplayName}
                     </Link>
-                    <div className="flex flex-col justify-center">
-                        <Link href={`/users/${creator.id}`} className="z-10 hover:underline">
-                            {creatorDisplayName}
+                    {creator.email !== creatorDisplayName && (
+                        <Link href={`/users/${creator.id}`} className="z-10 text-gray-500 hover:underline">
+                            {creator.email}
                         </Link>
-                        {creator.email !== creatorDisplayName && (
-                            <Link href={`/users/${creator.id}`} className="z-10 text-gray-500 hover:underline">
-                                {creator.email}
-                            </Link>
-                        )}
-                    </div>
+                    )}
                 </div>
-
-                <OptionsButton post={post} />
             </div>
             <div className="py-3 flex flex-col gap-3">
                 {post.text && <p className="text-xl whitespace-pre-line">{post.text}</p>}
