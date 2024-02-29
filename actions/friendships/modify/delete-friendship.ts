@@ -15,7 +15,7 @@ const deleteFriendship = async (formData: FormData) => {
 
     if (error) return actionError(actionName, { error });
 
-    return actionSuccess(actionName, { friendship_id }, "/");
+    return actionSuccess(actionName, { friendship_id }, { revalidatePath: "/" });
 };
 
 export default deleteFriendship;

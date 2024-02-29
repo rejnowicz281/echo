@@ -84,7 +84,7 @@ const updatePost = async (formData: FormData, postData: Post) => {
 
     if (error) return actionError(actionName, { error: error.message });
 
-    return actionSuccess(actionName, { ...updateData, id }, "/");
+    return actionSuccess(actionName, { ...updateData, id }, { revalidatePath: "/" });
 };
 
 export default updatePost;

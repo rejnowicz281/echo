@@ -15,7 +15,7 @@ const deleteLike = async (formData: FormData) => {
 
     if (error) return actionError(actionName, { error });
 
-    return actionSuccess(actionName, { like }, "/");
+    return actionSuccess(actionName, { like }, { revalidatePath: "/" });
 };
 
 export default deleteLike;

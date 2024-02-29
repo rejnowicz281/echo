@@ -18,7 +18,7 @@ const acceptFriendship = async (formData: FormData) => {
 
     if (error) return actionError(actionName, { error });
 
-    return actionSuccess(actionName, { friendship }, "/");
+    return actionSuccess(actionName, { friendship }, { revalidatePath: "/" });
 };
 
 export default acceptFriendship;

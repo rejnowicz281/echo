@@ -19,9 +19,9 @@ const googleSignIn = async () => {
         },
     });
 
-    if (error) return actionError(actionName, {}, null, "/login?message=Could not authenticate user");
+    if (error) return actionError(actionName, {}, { redirectPath: "/login?message=Could not authenticate user" });
 
-    return actionSuccess(actionName, {}, null, data.url);
+    return actionSuccess(actionName, {}, { redirectPath: data.url });
 };
 
 export default googleSignIn;

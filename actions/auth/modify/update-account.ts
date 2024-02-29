@@ -99,7 +99,7 @@ const updateAccount = async (formData: FormData) => {
     const revalidatePath =
         updateData.data?.first_name || updateData.data?.last_name || updateData.data?.avatar_url ? "/" : null;
 
-    return actionSuccess(actionName, actionData, revalidatePath);
+    return actionSuccess(actionName, actionData, { revalidatePath });
 };
 
 export default updateAccount;

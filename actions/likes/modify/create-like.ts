@@ -16,7 +16,7 @@ const createLike = async (formData: FormData) => {
 
     if (error) return actionError(actionName, { error });
 
-    return actionSuccess(actionName, { post, user }, "/");
+    return actionSuccess(actionName, { post, user }, { revalidatePath: "/" });
 };
 
 export default createLike;

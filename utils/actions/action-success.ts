@@ -1,12 +1,8 @@
+import { ActionResponseConfig } from "@/types/action-response-config";
 import actionResponse from "./action-response";
 
-const actionSuccess = (
-    actionName: string,
-    additionalData: Record<string, any> = {},
-    revalidatePath: string | null = null,
-    redirectPath: string | null = null
-) => {
-    return actionResponse(true, actionName, additionalData, revalidatePath, redirectPath);
+const actionSuccess = (actionName: string, data: Record<string, any> = {}, config: ActionResponseConfig = {}) => {
+    return actionResponse(true, actionName, data, config);
 };
 
 export default actionSuccess;

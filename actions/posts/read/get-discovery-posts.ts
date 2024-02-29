@@ -47,7 +47,7 @@ const getDiscoveryPosts = async (): Promise<PostsActionResponse> => {
     // shuffle posts
     const shuffledPosts = shuffle(posts);
 
-    return actionSuccess(actionName, { posts: shuffledPosts });
+    return actionSuccess(actionName, { posts: shuffledPosts }, { logData: false });
 };
 
 export default getDiscoveryPosts;

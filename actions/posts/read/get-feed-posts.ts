@@ -44,7 +44,7 @@ const getFeedPosts = async (): Promise<PostsActionResponse> => {
 
     if (postsError) return actionError(actionName, { error: postsError.message });
 
-    return actionSuccess(actionName, { posts });
+    return actionSuccess(actionName, { posts }, { logData: false });
 };
 
 export default getFeedPosts;

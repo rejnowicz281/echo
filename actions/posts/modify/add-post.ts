@@ -60,7 +60,7 @@ const addPost = async (formData: FormData) => {
         if (error) return actionError(actionName, { error: error.message });
     }
 
-    return actionSuccess(actionName, {}, "/");
+    return actionSuccess(actionName, {}, { revalidatePath: "/" });
 };
 
 export default addPost;

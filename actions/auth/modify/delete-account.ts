@@ -22,7 +22,7 @@ const deleteAccount = async () => {
 
     await supabase.auth.signOut();
 
-    return actionSuccess(actionName, { id }, null, "/login");
+    return actionSuccess(actionName, { id }, { redirectPath: "/login" });
 };
 
 export default deleteAccount;

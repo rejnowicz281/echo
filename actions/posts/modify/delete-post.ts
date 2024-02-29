@@ -15,7 +15,7 @@ const deletePost = async (formData: FormData) => {
 
     if (error) return actionError(actionName, { error });
 
-    return actionSuccess(actionName, { id }, "/");
+    return actionSuccess(actionName, { id }, { revalidatePath: "/" });
 };
 
 export default deletePost;

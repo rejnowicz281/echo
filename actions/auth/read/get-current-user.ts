@@ -10,7 +10,8 @@ const getCurrentUser = async () => {
 
     const { data } = await supabase.auth.getUser();
 
-    if (!data.user?.id) return actionError(actionName, {}, "/login");
+    if (!data.user?.id)
+        return actionError(actionName, { error: "Couldn't get current user" }, { redirectPath: "/login" });
 
     const user: User = {
         id: data.user.id,
@@ -22,7 +23,7 @@ const getCurrentUser = async () => {
         provider: data.user.app_metadata.provider,
     };
 
-    return actionSuccess(actionName, { user });
+    return actionSuccess(actionName, { user }, { logData: false });
 };
 
 export default getCurrentUser;

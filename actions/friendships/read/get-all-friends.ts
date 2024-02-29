@@ -64,7 +64,7 @@ const getAllFriends = async (): Promise<FriendsActionResponse> => {
         } else receivedRequests[i] = { ...request.requester, friendship_id: request.id };
     }
 
-    return actionSuccess(actionName, { acceptedFriends, sentRequests, receivedRequests });
+    return actionSuccess(actionName, { acceptedFriends, sentRequests, receivedRequests }, { logData: false });
 };
 
 export default getAllFriends;
