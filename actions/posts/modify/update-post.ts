@@ -62,16 +62,15 @@ const updatePost = async (formData: FormData, postData: Post) => {
             const image_url = bucket.getPublicUrl(fileName).data.publicUrl;
 
             // upload new post image
-            const { error } = await bucket.upload(fileName, imageFile);
-            if (error) return actionError(actionName, { error: error.message });
+            const [{ error: uploadError }, { error: removeError }] = await Promise.all([
+                bucket.upload(fileName, imageFile),
+                postData.image_url !== null // remove current post image if it exists
+                    ? bucket.remove([postData.image_url.split("/").pop() || ""])
+                    : { error: null },
+            ]);
 
-            // remove current post image if it exists
-            if (postData.image_url !== null) {
-                const currentImage = postData.image_url.split("/").pop() || "";
-
-                const { error } = await bucket.remove([currentImage]);
-                if (error) return actionError(actionName, { error: error.message });
-            }
+            if (uploadError || removeError)
+                return actionError(actionName, { error: uploadError?.message || removeError?.message });
 
             // update image_url
             updateData.image_url = image_url;

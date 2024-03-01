@@ -69,18 +69,15 @@ const updateAccount = async (formData: FormData) => {
 
         const avatar_url = bucket.getPublicUrl(fileName).data.publicUrl;
 
-        const { error } = await bucket.upload(fileName, avatarFile);
-
-        if (error) return actionError(actionName, { error: error.message });
-
-        // get name of current avatar
         const currentAvatar = user.user_metadata.avatar_url.split("/").pop();
 
-        // remove current user avatar if it's not the default
-        if (currentAvatar !== "default_avatar.jpg") {
-            const { error } = await bucket.remove([currentAvatar]);
-            if (error) return actionError(actionName, { error: error.message });
-        }
+        const [{ error: uploadError }, { error: removeError }] = await Promise.all([
+            bucket.upload(fileName, avatarFile),
+            currentAvatar !== "default_avatar.jpg" ? bucket.remove([currentAvatar]) : { error: null },
+        ]);
+
+        if (uploadError || removeError)
+            return actionError(actionName, { error: uploadError?.message || removeError?.message });
 
         updateData.data.avatar_url = avatar_url;
     }

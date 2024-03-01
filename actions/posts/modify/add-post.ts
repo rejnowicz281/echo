@@ -49,20 +49,20 @@ const addPost = async (formData: FormData): Promise<ActionResponse> => {
 
     const { bucket, fileName, image_url } = imageData;
 
-    const { error } = await supabase.from("posts").insert([
-        {
-            text,
-            creator: user.id,
-            image_url,
-            parent_post,
-        },
+    const [{ error: insertError }, { error: uploadError }] = await Promise.all([
+        supabase.from("posts").insert([
+            {
+                text,
+                creator: user.id,
+                image_url,
+                parent_post,
+            },
+        ]),
+        bucket && fileName && imageFile ? bucket.upload(fileName, imageFile) : { error: null },
     ]);
-    if (error) return actionError(actionName, { error: error.message });
 
-    if (bucket && fileName && imageFile) {
-        const { error } = await bucket.upload(fileName, imageFile);
-        if (error) return actionError(actionName, { error: error.message });
-    }
+    if (insertError || uploadError)
+        return actionError(actionName, { error: insertError?.message || uploadError?.message });
 
     return actionSuccess(actionName, {}, { revalidatePath: "/" });
 };
