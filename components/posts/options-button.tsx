@@ -19,6 +19,7 @@ import {
 } from "@/components/shadcn/ui/dropdown-menu";
 import useAuthContext from "@/providers/auth-provider";
 import { Post } from "@/types/posts";
+import actionSuccess from "@/utils/actions/action-success";
 import { usePathname, useRouter } from "next/navigation";
 import { FC, useState } from "react";
 import { SlOptions } from "react-icons/sl";
@@ -60,9 +61,19 @@ const OptionsButton: FC<OptionsButtonProps> = ({ post }) => {
     };
 
     const handleEdit = async (formData: FormData) => {
-        const res = await updatePost(formData, post);
+        const text = formData.get("text");
+        const imageFile = formData.get("image");
 
-        if (res.success) setEditOpen(false);
+        if (text === post.text && (!imageFile || (imageFile instanceof File && imageFile.size === 0))) {
+            setEditOpen(false);
+            return actionSuccess("updatePost");
+        } else {
+            const res = await updatePost(formData, post);
+
+            if (res.success) setEditOpen(false);
+
+            return res;
+        }
     };
 
     return (

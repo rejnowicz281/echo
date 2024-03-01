@@ -1,4 +1,5 @@
 "use client";
+
 import updateAccount from "@/actions/auth/modify/update-account";
 import SubmitButton from "@/components/general/submit-button";
 import { Button } from "@/components/shadcn/ui/button";
@@ -17,16 +18,31 @@ import useAuthContext from "@/providers/auth-provider";
 import { Checkbox } from "@/components/shadcn/ui/checkbox";
 import { Input } from "@/components/shadcn/ui/input";
 import Image from "next/image";
+import { useState } from "react";
 import { MdEdit } from "react-icons/md";
 import AvatarPicker from "./avatar-picker";
 
 const EditAccountButton = () => {
     const { user } = useAuthContext();
 
+    const [error, setError] = useState<string | null>(null);
+
     const isEmailProvider = user.provider === "email";
 
+    const handleUpdate = async (formData: FormData) => {
+        const password = formData.get("password");
+
+        if (typeof password === "string" && password.length > 1 && password.length < 6)
+            setError("Password should be at least 6 characters.");
+        else {
+            const res = await updateAccount(formData);
+
+            if (res.error) setError(res.error);
+        }
+    };
+
     return (
-        <Dialog>
+        <Dialog onOpenChange={() => setError(null)}>
             <DialogTrigger asChild>
                 <Button variant="ghost" className="text-teal-500 hover:text-teal-600 flex flex-row items-center gap-2">
                     <MdEdit />
@@ -44,7 +60,7 @@ const EditAccountButton = () => {
                     </DialogDescription>
                 </DialogHeader>
 
-                <form action={updateAccount}>
+                <form onSubmit={() => setError(null)} action={handleUpdate}>
                     <div className="flex flex-col items-center gap-3">
                         {isEmailProvider ? (
                             <AvatarPicker user={user} />
@@ -92,7 +108,13 @@ const EditAccountButton = () => {
                                     <Label htmlFor="password" className="text-right">
                                         Password
                                     </Label>
-                                    <Input id="password" name="password" type="password" className="col-span-3" />
+                                    <Input
+                                        id="password"
+                                        name="password"
+                                        type="password"
+                                        placeholder="********"
+                                        className="col-span-3"
+                                    />
                                 </div>
                                 <div className="flex items-center justify-end">
                                     <Checkbox name="reset_avatar" id="reset_avatar" />
@@ -103,7 +125,8 @@ const EditAccountButton = () => {
                             </>
                         )}
                     </div>
-                    <DialogFooter>
+                    <DialogFooter className="items-center gap-2">
+                        {error && <div className="text-red-500 text-sm">{error}</div>}
                         <Button asChild type="submit">
                             <SubmitButton content="Save" loading="Saving changes..." />
                         </Button>

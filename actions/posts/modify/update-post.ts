@@ -11,6 +11,7 @@ const updatePost = async (formData: FormData, postData: Post) => {
     const supabase = createClient();
 
     const textFormData = formData.get("text");
+    const imageFormData = formData.get("image");
 
     const id = postData.id;
     const text = (() => {
@@ -22,8 +23,12 @@ const updatePost = async (formData: FormData, postData: Post) => {
             return trimmed;
         } else return null;
     })();
+    const imageFile = imageFormData instanceof File && imageFormData.type.startsWith("image/") ? imageFormData : null;
 
     const imageUploadDisabled = formData.get("image_upload_disabled") === "true";
+
+    if (!text && !imageFile && !imageUploadDisabled)
+        return actionError(actionName, { error: "You must provide either text or an image to update a post." });
 
     const {
         data: { user },
@@ -38,11 +43,6 @@ const updatePost = async (formData: FormData, postData: Post) => {
 
     if (text !== postData.text) updateData["text"] = text;
     if (!imageUploadDisabled) {
-        const imageFormData = formData.get("image");
-
-        const imageFile =
-            imageFormData instanceof File && imageFormData.type.startsWith("image/") ? imageFormData : null;
-
         if (imageFile === null && postData.image_url !== null) {
             // get name of current image
             const currentImage = postData.image_url.split("/").pop() || "";
@@ -78,7 +78,7 @@ const updatePost = async (formData: FormData, postData: Post) => {
         }
     }
 
-    if (Object.keys(updateData).length === 0) return actionError(actionName, { error: "No changes were made." });
+    if (Object.keys(updateData).length === 0) return actionSuccess(actionName, { message: "No changes were made." });
 
     const { error } = await supabase.from("posts").update(updateData).eq("id", id);
 

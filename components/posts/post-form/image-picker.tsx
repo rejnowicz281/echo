@@ -2,19 +2,28 @@
 
 import { Button } from "@/components/shadcn/ui/button";
 import Image from "next/image";
-import { FC, useRef, useState } from "react";
+import { Dispatch, FC, SetStateAction, useEffect, useRef, useState } from "react";
 import { FaRegImage } from "react-icons/fa6";
 import { MdCancel } from "react-icons/md";
 
 export type ImagePickerProps = {
     initialImage?: string;
+    hideImage: boolean;
+    setHideImage: Dispatch<SetStateAction<boolean>>;
 };
 
-const ImagePicker: FC<ImagePickerProps> = ({ initialImage }) => {
+const ImagePicker: FC<ImagePickerProps> = ({ initialImage, hideImage, setHideImage }) => {
     const [selectedImage, setSelectedImage] = useState<string | null>(initialImage || null);
 
     // if initial image is present and it hasn't been changed or removed, this will be true
     const [imageUploadDisabled, setImageUploadDisabled] = useState<boolean>(Boolean(initialImage));
+
+    useEffect(() => {
+        if (hideImage) {
+            setSelectedImage(null);
+            setHideImage(false);
+        }
+    }, [hideImage]);
 
     const inputRef = useRef<HTMLInputElement>(null);
 

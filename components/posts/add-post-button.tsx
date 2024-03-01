@@ -39,9 +39,11 @@ const AddPostButton: FC<AddPostbuttonProps> = ({
     const [open, setOpen] = useState(false);
 
     async function handleAction(formData: FormData) {
-        await addPost(formData);
+        const res = await addPost(formData);
 
-        setOpen(false);
+        if (res.success) setOpen(false);
+
+        return res;
     }
 
     return (

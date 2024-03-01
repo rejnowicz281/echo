@@ -86,7 +86,7 @@ const updateAccount = async (formData: FormData) => {
     }
 
     if (JSON.stringify(updateData) === JSON.stringify({ data: {} }))
-        return actionError(actionName, { error: "No changes were made." });
+        return actionSuccess(actionName, { message: "No changes were made." });
 
     const { error } = await supabase.auth.updateUser(updateData);
 

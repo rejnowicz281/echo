@@ -1,10 +1,11 @@
 "use server";
 
 import actionError from "@/utils/actions/action-error";
+import { ActionResponse } from "@/utils/actions/action-response";
 import actionSuccess from "@/utils/actions/action-success";
 import { createClient } from "@/utils/supabase/server";
 
-const addPost = async (formData: FormData) => {
+const addPost = async (formData: FormData): Promise<ActionResponse> => {
     const actionName = "addPost";
 
     const textFormData = formData.get("text");
@@ -22,6 +23,9 @@ const addPost = async (formData: FormData) => {
     })();
     const imageFile = imageFormData instanceof File && imageFormData.type.startsWith("image/") ? imageFormData : null;
     const parent_post = typeof parentPostFormData === "string" ? parentPostFormData : null;
+
+    if (!text && !imageFile)
+        return actionError(actionName, { error: "You must provide either text or an image to add a post" });
 
     const supabase = createClient();
 
