@@ -2,7 +2,6 @@ import { Post } from "@/types/posts";
 import actionError from "@/utils/actions/action-error";
 import { ActionResponse } from "@/utils/actions/action-response";
 import actionSuccess from "@/utils/actions/action-success";
-import shuffle from "@/utils/general/shuffle-array";
 import { createClient } from "@/utils/supabase/server";
 
 export type PostsActionResponse = ActionResponse & {
@@ -40,14 +39,12 @@ const getDiscoveryPosts = async (): Promise<PostsActionResponse> => {
         .from("posts_with_details")
         .select("*, creator:users(*)")
         .not("creator", "in", `(${users.join(",")})`)
-        .is("parent_post", null);
+        .is("parent_post", null)
+        .order("created_at", { ascending: false });
 
     if (postsError) return actionError(actionName, { error: postsError.message });
 
-    // shuffle posts
-    const shuffledPosts = shuffle(posts);
-
-    return actionSuccess(actionName, { posts: shuffledPosts }, { logData: false });
+    return actionSuccess(actionName, { posts }, { logData: false });
 };
 
 export default getDiscoveryPosts;
