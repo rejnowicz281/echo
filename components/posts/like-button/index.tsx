@@ -57,15 +57,11 @@ const LikeButton: FC<ReplyButtonProps> = ({ post }) => {
                     <DialogHeader>
                         <DialogTitle>Likes</DialogTitle>
                         <DialogDescription>
-                            {post.like_count > 0 && (
-                                <p>
-                                    {post.like_count === 1
-                                        ? `1 person liked this post.${post.like ? " (You)" : ""}`
-                                        : `${post.like_count} people liked this post${
-                                              post.like ? ", including you." : "."
-                                          }`}
-                                </p>
-                            )}
+                            {post.like_count > 0
+                                ? post.like_count === 1
+                                    ? `1 person liked this post.${post.like ? " (You)" : ""}`
+                                    : `${post.like_count} people liked this post${post.like ? ", including you." : "."}`
+                                : "No one liked this post yet."}
                         </DialogDescription>
                     </DialogHeader>
                     <LikeList postId={post.id} />
