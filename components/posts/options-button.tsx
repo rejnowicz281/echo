@@ -119,7 +119,7 @@ const OptionsButton: FC<OptionsButtonProps> = ({ post }) => {
                         </AlertDialogHeader>
                         <AlertDialogFooter>
                             <AlertDialogCancel>Cancel</AlertDialogCancel>
-                            <form action={handleDelete}>
+                            <form className="flex flex-col" action={handleDelete}>
                                 <input type="hidden" name="id" value={post.id} />
                                 <AlertDialogAction asChild>
                                     <SubmitButton content="Delete Post" loading="Deleting..." />

@@ -125,8 +125,8 @@ const EditAccountButton = () => {
                             </>
                         )}
                     </div>
-                    <DialogFooter className="items-center gap-2">
-                        {error && <div className="text-red-500 text-sm">{error}</div>}
+                    <DialogFooter className="gap-2">
+                        {error && <div className="text-red-500 text-sm self-center">{error}</div>}
                         <Button asChild type="submit">
                             <SubmitButton content="Save" loading="Saving changes..." />
                         </Button>

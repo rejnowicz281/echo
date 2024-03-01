@@ -37,7 +37,7 @@ const DeleteAccountButton = () => {
                     </AlertDialogHeader>
                     <AlertDialogFooter>
                         <AlertDialogCancel>Cancel</AlertDialogCancel>
-                        <form action={deleteAccount}>
+                        <form className="flex flex-col" action={deleteAccount}>
                             <AlertDialogAction asChild>
                                 <SubmitButton content="Delete My Account" loading="Deleting..." />
                             </AlertDialogAction>

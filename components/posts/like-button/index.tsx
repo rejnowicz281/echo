@@ -53,7 +53,7 @@ const LikeButton: FC<ReplyButtonProps> = ({ post }) => {
                     </button>
                 </DialogTrigger>
 
-                <DialogContent className="overflow-y-auto max-h-screen">
+                <DialogContent>
                     <DialogHeader>
                         <DialogTitle>Likes</DialogTitle>
                         <DialogDescription>
