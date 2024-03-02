@@ -66,7 +66,7 @@ const PostForm: FC<PostFormProps> = ({
                         setHideImage={setHideImage}
                         initialImage={initialPost?.image_url}
                     />
-                    <Button className="w-[90px] rounded-2xl border font-bold" variant="ghost" asChild>
+                    <Button className="w-[100px] rounded-2xl border font-bold shrink-0" variant="ghost" asChild>
                         <SubmitButton
                             content={content}
                             loading={

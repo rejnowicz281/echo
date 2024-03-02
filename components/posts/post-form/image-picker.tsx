@@ -50,6 +50,23 @@ const ImagePicker: FC<ImagePickerProps> = ({ initialImage, hideImage, setHideIma
 
     return (
         <div className="flex flex-row gap-1 items-start">
+            {selectedImage && (
+                <>
+                    <div className="relative">
+                        <Image
+                            src={selectedImage}
+                            alt="Post Image"
+                            width={0}
+                            height={0}
+                            sizes="100vw"
+                            className="rounded-lg w-full h-auto"
+                        />
+                    </div>
+                    <Button variant="ghost" className="rounded-[50%] hover:bg-gray-200 p-2" onClick={handleRemoveImage}>
+                        <MdCancel className="text-2xl" fill="gray" />
+                    </Button>
+                </>
+            )}
             <Button
                 variant="ghost"
                 type="button"
@@ -58,6 +75,7 @@ const ImagePicker: FC<ImagePickerProps> = ({ initialImage, hideImage, setHideIma
             >
                 <FaRegImage className="text-2xl" fill="gray" />
             </Button>
+
             <input
                 className="hidden"
                 ref={inputRef}
@@ -67,14 +85,6 @@ const ImagePicker: FC<ImagePickerProps> = ({ initialImage, hideImage, setHideIma
                 onChange={handleImageChange}
             />
             {imageUploadDisabled && <input type="hidden" name="image_upload_disabled" value="true" />}
-            {selectedImage && (
-                <>
-                    <Button variant="ghost" className="rounded-[50%] hover:bg-gray-200 p-2" onClick={handleRemoveImage}>
-                        <MdCancel className="text-2xl" fill="gray" />
-                    </Button>
-                    <Image className="rounded-2xl" src={selectedImage} alt="Selected" width={200} height={200} />
-                </>
-            )}
         </div>
     );
 };
