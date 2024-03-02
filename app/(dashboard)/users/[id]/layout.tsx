@@ -39,7 +39,8 @@ const UserPageLayout: FC<UserPageLayoutProps> = async ({ children, params: { id 
                         Member since {new Date(user.created_at).toLocaleDateString()}
                     </div>
                     <FriendshipContainer userVisited={user} />
-                    {user.id !== process.env.DEMO_USER_ID && <SettingsContainer user={user} />}
+
+                    <SettingsContainer userId={user.id} isCurrentUser={user.isCurrentUser} />
                 </div>
                 <UserProvider user={user}>{children}</UserProvider>
             </div>

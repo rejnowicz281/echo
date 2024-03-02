@@ -7,7 +7,7 @@ import { ActionResponse } from "@/utils/actions/action-response";
 import actionSuccess from "@/utils/actions/action-success";
 import { createClient } from "@/utils/supabase/server";
 
-export type UserType = User & { friendship: Friendship; posts: Post[] };
+export type UserType = User & { friendship: Friendship; posts: Post[]; isCurrentUser: boolean };
 
 export type UserActionResponse = ActionResponse & {
     user?: UserType;
@@ -20,13 +20,20 @@ const getUser = async (id: string): Promise<UserActionResponse> => {
 
     const { user } = await getCurrentUser();
 
-    const friendshipInfoQuery = () =>
-        supabase
-            .from("friendships")
-            .select("*")
-            .or(`and(requester.eq.${user.id}, recipient.eq.${id}), and(requester.eq.${id}, recipient.eq.${user.id})`);
+    const isCurrentUser = user.id === id;
 
-    const userInfoQuery = () => supabase.from("users").select("*").eq("id", id).single();
+    const friendshipInfoQuery = () =>
+        isCurrentUser
+            ? { data: [undefined], error: null }
+            : supabase
+                  .from("friendships")
+                  .select("*")
+                  .or(
+                      `and(requester.eq.${user.id}, recipient.eq.${id}), and(requester.eq.${id}, recipient.eq.${user.id})`
+                  );
+
+    const userInfoQuery = () =>
+        isCurrentUser ? { data: user, error: null } : supabase.from("users").select("*").eq("id", id).single();
 
     const userPostsInfoQuery = () =>
         supabase
@@ -37,8 +44,8 @@ const getUser = async (id: string): Promise<UserActionResponse> => {
             .order("created_at", { ascending: false });
 
     const [friendshipInfo, userInfo, userPostsInfo] = await Promise.all([
-        user.id === id ? { data: [undefined], error: null } : friendshipInfoQuery(),
-        user.id === id ? { data: user, error: null } : userInfoQuery(),
+        friendshipInfoQuery(),
+        userInfoQuery(),
         userPostsInfoQuery(),
     ]);
 
@@ -51,6 +58,7 @@ const getUser = async (id: string): Promise<UserActionResponse> => {
         ...userInfo.data,
         posts,
         friendship: friendshipInfo.data[0],
+        isCurrentUser,
     };
 
     return actionSuccess(actionName, { user: finalUser });
