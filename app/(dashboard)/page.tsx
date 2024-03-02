@@ -1,4 +1,5 @@
 import getFeedPosts from "@/actions/posts/read/get-feed-posts";
+import ErrorContainer from "@/components/general/error-container";
 import PostContainer from "@/components/posts/post-container";
 import PostForm from "@/components/posts/post-form";
 
@@ -7,8 +8,8 @@ const Home = async () => {
 
     const posts = data.posts;
 
-    if (data.error) return <h1>Error loading posts: {data.error}</h1>;
-    if (!posts) return <h1>Couldn't load posts</h1>;
+    if (data.error) return <ErrorContainer error={data.error} />;
+    if (!posts) return <ErrorContainer error="An error has occurred while fetching your feed" />;
 
     return (
         <div className="p-12 mx-auto max-w-[800px] w-full flex flex-col gap-10">

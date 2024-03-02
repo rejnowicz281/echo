@@ -1,4 +1,5 @@
 import getPost from "@/actions/posts/read/get-post";
+import ErrorContainer from "@/components/general/error-container";
 import BackLinkText from "@/components/posts/back-link-text";
 import PostContainer from "@/components/posts/post-container";
 import PostForm from "@/components/posts/post-form";
@@ -13,7 +14,10 @@ export type PostPageProps = {
 const PostPage: FC<PostPageProps> = async ({ params: { id } }) => {
     const { post } = await getPost(id);
 
-    if (!post) return <div>Post not found</div>;
+    if (!post)
+        return (
+            <ErrorContainer error="An error has occured while fetching this post. Are you sure the ID is correct?" />
+        );
 
     return (
         <div className="p-12 mx-auto max-w-[800px] w-full flex flex-col gap-10">

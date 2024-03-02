@@ -1,4 +1,5 @@
 import getDiscoveryPosts from "@/actions/posts/read/get-discovery-posts";
+import ErrorContainer from "@/components/general/error-container";
 import PostContainer from "@/components/posts/post-container";
 import Link from "next/link";
 
@@ -7,8 +8,8 @@ const DiscoverPage = async () => {
 
     const posts = data.posts;
 
-    if (data.error) return <h1>Error loading posts: {data.error}</h1>;
-    if (!posts) return <h1>Couldn't load posts</h1>;
+    if (data.error) return <ErrorContainer error={data.error} />;
+    if (!posts) return <ErrorContainer error="An error has occurred while fetching the posts" />;
 
     return (
         <div className="p-12 mx-auto max-w-[800px] w-full flex flex-col gap-10">

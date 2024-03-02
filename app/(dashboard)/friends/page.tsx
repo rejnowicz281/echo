@@ -1,6 +1,7 @@
 import acceptFriendship from "@/actions/friendships/modify/accept-friendship";
 import deleteFriendship from "@/actions/friendships/modify/delete-friendship";
 import getAllFriends from "@/actions/friendships/read/get-all-friends";
+import ErrorContainer from "@/components/general/error-container";
 import PresenceAvatar from "@/components/general/presence-avatar";
 import SubmitButton from "@/components/general/submit-button";
 import { Button } from "@/components/shadcn/ui/button";
@@ -15,7 +16,7 @@ const FriendsPage = async () => {
     const { acceptedFriends, sentRequests, receivedRequests } = await getAllFriends();
 
     if (!acceptedFriends || !sentRequests || !receivedRequests)
-        return <div>There was an error fetching your friends</div>;
+        return <ErrorContainer error="An error has occurred while fetching your friends" />;
 
     const userSection = (user: User & { friendship_id: string }, type: "sent" | "received" | "accepted") => {
         const displayName = userDisplayName(user);

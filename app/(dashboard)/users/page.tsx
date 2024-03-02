@@ -1,4 +1,5 @@
 import getAllUsers from "@/actions/users/read/get-all-users";
+import ErrorContainer from "@/components/general/error-container";
 import PresenceAvatar from "@/components/general/presence-avatar";
 import { User } from "@/types/users";
 import userDisplayName from "@/utils/general/user-display-name";
@@ -7,7 +8,7 @@ import Link from "next/link";
 const UsersPage = async () => {
     const { users } = await getAllUsers();
 
-    if (!users) return <div>There was an error fetching the users</div>;
+    if (!users) return <ErrorContainer error="An error has occured while fetching the users" />;
 
     const userSection = (user: User) => {
         const displayName = userDisplayName(user);

@@ -1,4 +1,5 @@
 import getUser from "@/actions/users/read/get-user";
+import ErrorContainer from "@/components/general/error-container";
 import PresenceAvatar from "@/components/general/presence-avatar";
 import FriendshipContainer from "@/components/user-profile/friendship-container";
 import SectionLinks from "@/components/user-profile/section-links";
@@ -15,7 +16,10 @@ export type UserPageLayoutProps = {
 const UserPageLayout: FC<UserPageLayoutProps> = async ({ children, params: { id } }) => {
     const { user } = await getUser(id);
 
-    if (!user) return <div>There was an error fetching the user</div>;
+    if (!user)
+        return (
+            <ErrorContainer error="An error has occured while fetching this user. Are you sure the ID is correct?" />
+        );
 
     const displayName = userDisplayName(user);
 
