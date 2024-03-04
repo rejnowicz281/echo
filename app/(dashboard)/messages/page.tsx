@@ -1,5 +1,5 @@
 const MessagesPage = () => {
-    return <div>Work in progress</div>;
+    return <div>Choose a person from the sidebar</div>;
 };
 
 export default MessagesPage;
