@@ -58,7 +58,7 @@ const signUp = async (formData: FormData) => {
         }
 
         return {
-            avatar_url: "https://trvvoqhvriwitcyitfid.supabase.co/storage/v1/object/public/avatars/default_avatar.jpg",
+            avatar_url: process.env.DEFAULT_AVATAR_URL,
         };
     })();
 

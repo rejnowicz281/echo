@@ -59,8 +59,7 @@ const updateAccount = async (formData: FormData) => {
 
             if (error) return actionError(actionName, { error: error.message });
 
-            updateData.data.avatar_url =
-                "https://trvvoqhvriwitcyitfid.supabase.co/storage/v1/object/public/avatars/default_avatar.jpg";
+            updateData.data.avatar_url = process.env.DEFAULT_AVATAR_URL;
         }
     } else if (avatarFile) {
         const bucket = supabase.storage.from("avatars");
