@@ -24,27 +24,25 @@ const UserPageLayout: FC<UserPageLayoutProps> = async ({ children, params: { id 
     const displayName = userDisplayName(user);
 
     return (
-        <>
-            <div className="px-12 pb-12 flex flex-col gap-3">
-                <div className="mx-auto max-w-[700px] w-full flex flex-col gap-3">
-                    <SectionLinks userId={id} />
-                    <div className="word-break flex flex-col items-center gap-3">
-                        <PresenceAvatar markerSize={23} avatarSize={100} userId={user.id} src={user.avatar_url} />
-                        <div className="text-center">
-                            <div>{displayName}</div>
-                            {displayName !== user.email && <div className="text-gray-500">{user.email}</div>}
-                        </div>
+        <div className="flex-1 px-12 pb-12 flex flex-col gap-3">
+            <div className="mx-auto max-w-[700px] w-full flex flex-col gap-3">
+                <SectionLinks userId={id} />
+                <div className="word-break flex flex-col items-center gap-3">
+                    <PresenceAvatar markerSize={23} avatarSize={100} userId={user.id} src={user.avatar_url} />
+                    <div className="text-center">
+                        <div>{displayName}</div>
+                        {displayName !== user.email && <div className="text-gray-500">{user.email}</div>}
                     </div>
-                    <div className="text-center text-sm text-gray-500">
-                        Member since {new Date(user.created_at).toLocaleDateString()}
-                    </div>
-                    <FriendshipContainer userVisited={user} />
-
-                    <SettingsContainer userId={user.id} isCurrentUser={user.isCurrentUser} />
                 </div>
-                <UserProvider user={user}>{children}</UserProvider>
+                <div className="text-center text-sm text-gray-500">
+                    Member since {new Date(user.created_at).toLocaleDateString()}
+                </div>
+                <FriendshipContainer userVisited={user} />
+
+                <SettingsContainer userId={user.id} isCurrentUser={user.isCurrentUser} />
             </div>
-        </>
+            <UserProvider user={user}>{children}</UserProvider>
+        </div>
     );
 };
 

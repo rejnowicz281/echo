@@ -17,7 +17,7 @@ import TogglePresenceButton from "./toggle-presence-button";
 
 const MainSidebar = () => {
     return (
-        <div className="px-16 py-12 border-r border-r-gray-100 flex flex-col gap-12">
+        <div className="px-16 py-12 border-r border-r-gray-100 flex-1 flex flex-col gap-12">
             <CurrentUser />
             <div className="flex flex-col gap-3">
                 <SignOutButton />

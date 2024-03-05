@@ -16,12 +16,12 @@ const DashboardLayout: FC<DashboardLayoutProps> = async ({ children }) => {
             <PresenceProvider>
                 <div className="flex flex-row flex-1">
                     <div className="relative flex basis-[400px] shrink-0">
-                        <div className="absolute overflow-auto inset-0">
+                        <div className="absolute overflow-auto inset-0 flex-1 flex flex-col">
                             <MainSidebar />
                         </div>
                     </div>
                     <div className="relative flex flex-1">
-                        <div className="absolute overflow-auto inset-0 flex flex-col">{children}</div>
+                        <div className="absolute overflow-auto inset-0 flex-1 flex flex-col">{children}</div>
                     </div>
                 </div>
             </PresenceProvider>

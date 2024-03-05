@@ -33,7 +33,7 @@ const MessagesSidebar: FC<MessagesSidebarProps> = ({ contacts }) => {
     });
 
     return (
-        <div className="border-l border-l-gray-100 flex flex-col gap-3">
+        <div className="border-l border-l-gray-100 flex-1 flex flex-col gap-3">
             <ContactSearch setSearchQuery={setSearchQuery} searchQuery={searchQuery} contactsCount={contacts.length} />
             {contacts.length > 0 ? (
                 <div className="flex flex-col gap-5 px-4">
