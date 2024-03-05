@@ -1,8 +1,7 @@
 import getAcceptedFriends from "@/actions/friendships/read/get-accepted-friends";
 import ErrorContainer from "@/components/general/error-container";
-import { ChattersProvider } from "@/components/messages/chatters-provider";
-import userDisplayName from "@/utils/general/user-display-name";
-import Link from "next/link";
+import { ContactsProvider } from "@/components/messages/contacts-provider";
+import MessagesSidebar from "@/components/messages/sidebar";
 import { FC } from "react";
 
 export type MessagesPageLayoutProps = {
@@ -12,19 +11,21 @@ export type MessagesPageLayoutProps = {
 const MessagesPageLayout: FC<MessagesPageLayoutProps> = async ({ children }) => {
     const { friends } = await getAcceptedFriends();
 
-    if (!friends) return <ErrorContainer error="An error has occurred while fetching your chatters" />;
+    if (!friends) return <ErrorContainer error="An error has occurred while fetching your contacts" />;
 
     return (
-        <>
-            <ul>
-                {friends.map((friend) => (
-                    <li key={friend.id}>
-                        <Link href={`/messages/${friend.id}`}>{userDisplayName(friend)}</Link>
-                    </li>
-                ))}
-            </ul>
-            <ChattersProvider chatters={friends}>{children}</ChattersProvider>
-        </>
+        <div className="flex flex-row flex-1">
+            <div className="relative flex flex-1">
+                <div className="absolute overflow-auto inset-0 flex flex-col">
+                    <ContactsProvider contacts={friends}>{children}</ContactsProvider>
+                </div>
+            </div>
+            <div className="relative flex basis-[400px] shrink-0">
+                <div className="absolute overflow-auto inset-0">
+                    <MessagesSidebar contacts={friends} />
+                </div>
+            </div>
+        </div>
     );
 };
 

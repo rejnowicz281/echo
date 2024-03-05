@@ -23,7 +23,7 @@ const sendMessage = async (formData: FormData) => {
 
     if (error) return actionError(actionName, { error });
 
-    return actionSuccess(actionName, { recipient, text }, { revalidatePath: "/" });
+    return actionSuccess(actionName, { recipient, text }, { revalidatePath: "/users/[slug]" });
 };
 
 export default sendMessage;
