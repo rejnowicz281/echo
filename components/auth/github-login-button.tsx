@@ -1,6 +1,6 @@
 import githubSignIn from "@/actions/auth/modify/github-sign-in";
 import SubmitButton from "@/components/general/submit-button";
-import { BsGithub } from "react-icons/bs";
+import { BsGithub } from "@react-icons/all-files/bs/BsGithub";
 
 const GithubLoginButton = () => {
     return (

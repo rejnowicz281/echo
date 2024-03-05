@@ -1,6 +1,6 @@
 import googleSignIn from "@/actions/auth/modify/google-sign-in";
 import SubmitButton from "@/components/general/submit-button";
-import { FcGoogle } from "react-icons/fc";
+import { FcGoogle } from "@react-icons/all-files/fc/FcGoogle";
 
 const GoogleLoginButton = () => {
     return (

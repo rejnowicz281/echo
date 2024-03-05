@@ -1,6 +1,6 @@
 import signOut from "@/actions/auth/modify/sign-out";
 import { Button } from "@/components/shadcn/ui/button";
-import { BsPersonRaisedHand } from "react-icons/bs";
+import { BsPersonRaisedHand } from "@react-icons/all-files/bs/BsPersonRaisedHand";
 import SubmitButton from "../submit-button";
 
 const SignOutButton = () => {

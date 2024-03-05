@@ -3,9 +3,9 @@ import ErrorContainer from "@/components/general/error-container";
 import BackLinkText from "@/components/posts/back-link-text";
 import PostContainer from "@/components/posts/post-container";
 import PostForm from "@/components/posts/post-form";
+import { IoMdArrowRoundBack } from "@react-icons/all-files/io/IoMdArrowRoundBack";
 import Link from "next/link";
 import { FC } from "react";
-import { IoMdArrowRoundBack } from "react-icons/io";
 
 export type PostPageProps = {
     params: { id: string };

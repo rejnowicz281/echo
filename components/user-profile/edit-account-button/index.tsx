@@ -17,9 +17,9 @@ import useAuthContext from "@/providers/auth-provider";
 
 import { Checkbox } from "@/components/shadcn/ui/checkbox";
 import { Input } from "@/components/shadcn/ui/input";
+import { MdEdit } from "@react-icons/all-files/md/MdEdit";
 import Image from "next/image";
 import { useState } from "react";
-import { MdEdit } from "react-icons/md";
 import AvatarPicker from "./avatar-picker";
 
 const EditAccountButton = () => {

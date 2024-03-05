@@ -2,7 +2,8 @@
 
 import { Button } from "@/components/shadcn/ui/button";
 import usePresenceContext from "@/providers/presence-provider";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { FaEye } from "@react-icons/all-files/fa/FaEye";
+import { FaEyeSlash } from "@react-icons/all-files/fa/FaEyeSlash";
 
 const TogglePresenceButton = () => {
     const { togglePresence, presenceEnabled } = usePresenceContext();

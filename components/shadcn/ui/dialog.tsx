@@ -1,8 +1,8 @@
 "use client";
 
 import * as DialogPrimitive from "@radix-ui/react-dialog";
+import { IoClose } from "@react-icons/all-files/io5/IoClose";
 import * as React from "react";
-import { IoClose } from "react-icons/io5";
 
 import { cn } from "@/utils/shadcn/index.ts";
 

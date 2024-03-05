@@ -7,10 +7,10 @@ import SubmitButton from "@/components/general/submit-button";
 import { Button } from "@/components/shadcn/ui/button";
 import { User } from "@/types/users";
 import userDisplayName from "@/utils/general/user-display-name";
+import { FaCheck } from "@react-icons/all-files/fa6/FaCheck";
+import { IoClose } from "@react-icons/all-files/io5/IoClose";
+import { VscLoading } from "@react-icons/all-files/vsc/VscLoading";
 import Link from "next/link";
-import { FaCheck } from "react-icons/fa";
-import { IoClose } from "react-icons/io5";
-import { VscLoading } from "react-icons/vsc";
 
 const FriendsPage = async () => {
     const { acceptedFriends, sentRequests, receivedRequests } = await getAllFriends();

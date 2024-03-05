@@ -6,10 +6,12 @@ import deleteFriendship from "@/actions/friendships/modify/delete-friendship";
 import useAuthContext from "@/providers/auth-provider";
 import { Friendship } from "@/types/friendships";
 import { User } from "@/types/users";
+import { IoPersonAdd } from "@react-icons/all-files/io5/IoPersonAdd";
+import { MdPersonAdd } from "@react-icons/all-files/md/MdPersonAdd";
+import { MdPersonAddDisabled } from "@react-icons/all-files/md/MdPersonAddDisabled";
+import { MdPersonRemove } from "@react-icons/all-files/md/MdPersonRemove";
+import { VscLoading } from "@react-icons/all-files/vsc/VscLoading";
 import { FC } from "react";
-import { IoPersonAdd } from "react-icons/io5";
-import { MdPersonAdd, MdPersonAddDisabled, MdPersonRemove } from "react-icons/md";
-import { VscLoading } from "react-icons/vsc";
 import SubmitButton from "../general/submit-button";
 import { Button } from "../shadcn/ui/button";
 

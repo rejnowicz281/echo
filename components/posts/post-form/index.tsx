@@ -6,8 +6,8 @@ import { Button } from "@/components/shadcn/ui/button";
 import { Textarea } from "@/components/shadcn/ui/textarea";
 import { Post } from "@/types/posts";
 import { ActionResponse } from "@/utils/actions/action-response";
+import { VscLoading } from "@react-icons/all-files/vsc/VscLoading";
 import { FC, useRef, useState } from "react";
-import { VscLoading } from "react-icons/vsc";
 import ImagePicker from "./image-picker";
 
 export type PostFormProps = {

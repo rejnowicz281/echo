@@ -1,10 +1,10 @@
 "use client";
 
 import { Button } from "@/components/shadcn/ui/button";
+import { FaRegImage } from "@react-icons/all-files/fa6/FaRegImage";
+import { MdCancel } from "@react-icons/all-files/md/MdCancel";
 import Image from "next/image";
 import { Dispatch, FC, SetStateAction, useEffect, useRef, useState } from "react";
-import { FaRegImage } from "react-icons/fa6";
-import { MdCancel } from "react-icons/md";
 
 export type ImagePickerProps = {
     initialImage?: string;

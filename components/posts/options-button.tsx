@@ -20,9 +20,9 @@ import {
 import useAuthContext from "@/providers/auth-provider";
 import { Post } from "@/types/posts";
 import actionSuccess from "@/utils/actions/action-success";
+import { SlOptions } from "@react-icons/all-files/sl/SlOptions";
 import { usePathname, useRouter } from "next/navigation";
 import { FC, useState } from "react";
-import { SlOptions } from "react-icons/sl";
 import SubmitButton from "../general/submit-button";
 import {
     AlertDialog,

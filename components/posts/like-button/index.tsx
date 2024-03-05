@@ -13,9 +13,10 @@ import {
 } from "@/components/shadcn/ui/dialog";
 import { Post } from "@/types/posts";
 import formatBigNumbers from "@/utils/general/format-big-numbers";
+import { RiHeart3Fill } from "@react-icons/all-files/ri/RiHeart3Fill";
+import { RiHeart3Line } from "@react-icons/all-files/ri/RiHeart3Line";
+import { VscLoading } from "@react-icons/all-files/vsc/VscLoading";
 import { FC } from "react";
-import { RiHeart3Fill, RiHeart3Line } from "react-icons/ri";
-import { VscLoading } from "react-icons/vsc";
 import CreateActionHiddenInputs from "./create-action-hidden-inputs";
 import LikeList from "./like-list";
 

@@ -1,7 +1,8 @@
 "use client";
 
 import useAuthContext from "@/providers/auth-provider";
-import { FaRegUser, FaUser } from "react-icons/fa6";
+import { FaRegUser } from "@react-icons/all-files/fa6/FaRegUser";
+import { FaUser } from "@react-icons/all-files/fa6/FaUser";
 import NavLink from "./nav-link";
 
 const ProfileLink = () => {

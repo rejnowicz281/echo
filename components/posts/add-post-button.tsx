@@ -10,8 +10,8 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/components/shadcn/ui/dialog";
+import { IoMdCreate } from "@react-icons/all-files/io/IoMdCreate";
 import { FC, useState } from "react";
-import { IoMdCreate } from "react-icons/io";
 import PostForm from "./post-form";
 
 export type AddPostbuttonProps = {

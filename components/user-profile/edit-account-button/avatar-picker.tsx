@@ -1,9 +1,9 @@
 "use client";
 
 import { User } from "@/types/users";
+import { MdClose } from "@react-icons/all-files/md/MdClose";
 import Image from "next/image";
 import { FC, useRef, useState } from "react";
-import { MdClose } from "react-icons/md";
 
 export type AvatarPickerProps = {
     user: User;

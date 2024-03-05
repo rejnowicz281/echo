@@ -2,8 +2,8 @@ import AddPostButton from "@/components/posts/add-post-button";
 import { Post } from "@/types/posts";
 import formatBigNumbers from "@/utils/general/format-big-numbers";
 import userDisplayName from "@/utils/general/user-display-name";
+import { FaRegComment } from "@react-icons/all-files/fa6/FaRegComment";
 import { FC } from "react";
-import { FaRegComment } from "react-icons/fa6";
 
 export type ReplyButtonProps = {
     post: Post;

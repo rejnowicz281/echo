@@ -1,5 +1,5 @@
 import deleteAccount from "@/actions/auth/modify/delete-account";
-import { MdDelete } from "react-icons/md";
+import { MdDelete } from "@react-icons/all-files/md/MdDelete";
 import SubmitButton from "../general/submit-button";
 import {
     AlertDialog,
