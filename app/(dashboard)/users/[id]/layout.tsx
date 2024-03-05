@@ -1,6 +1,7 @@
 import getUser from "@/actions/users/read/get-user";
 import ErrorContainer from "@/components/general/error-container";
 import PresenceAvatar from "@/components/general/presence-avatar";
+import ChatWithButton from "@/components/user-profile/chat-with-button";
 import FriendshipContainer from "@/components/user-profile/friendship-container";
 import SectionLinks from "@/components/user-profile/section-links";
 import SettingsContainer from "@/components/user-profile/settings-container";
@@ -37,7 +38,10 @@ const UserPageLayout: FC<UserPageLayoutProps> = async ({ children, params: { id 
                 <div className="text-center text-sm text-gray-500">
                     Member since {new Date(user.created_at).toLocaleDateString()}
                 </div>
-                <FriendshipContainer userVisited={user} />
+                <div>
+                    <ChatWithButton userId={user.id} />
+                    <FriendshipContainer userVisited={user} />
+                </div>
 
                 <SettingsContainer userId={user.id} isCurrentUser={user.isCurrentUser} />
             </div>
