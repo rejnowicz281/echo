@@ -1,20 +1,20 @@
-import getMessagesByRecipientId from "@/actions/messages/read/get-messages-by-recipient-id";
+import getChat from "@/actions/messages/read/get-chat";
 import ErrorContainer from "@/components/general/error-container";
 import ChatContainer from "@/components/messages/chat-container";
 import { FC } from "react";
 
 export type ChatPageProps = {
     params: {
-        id: string;
+        id: string; // Contact (user) id
     };
 };
 
 const ChatPage: FC<ChatPageProps> = async ({ params: { id } }) => {
-    const { messages } = await getMessagesByRecipientId(id);
+    const { messages, contact } = await getChat(id);
 
-    if (!messages) return <ErrorContainer error="An error occured while fetching your messages" />;
+    if (!messages || !contact) return <ErrorContainer error="An error occured while loading the chat" />;
 
-    return <ChatContainer messages={messages} contactId={id} />;
+    return <ChatContainer messages={messages} contact={contact} />;
 };
 
 export default ChatPage;

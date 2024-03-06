@@ -8,8 +8,10 @@ import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useRouter } from "next/navigation";
 import { FC, createContext, useContext, useEffect, useOptimistic } from "react";
 
+export type Contact = User & { is_friend: boolean };
+
 export type ChatContextType = {
-    contact: User;
+    contact: Contact;
     optimisticMessages: Message[];
     addOptimisticMessage: (text: string, sender?: string) => void;
     deleteOptimisticMessage: (id: string) => void;
@@ -18,7 +20,7 @@ export type ChatContextType = {
 export type ChatProviderProps = {
     children: React.ReactNode;
     messages: Message[];
-    contact: User;
+    contact: Contact;
 };
 
 const ChatContext = createContext<ChatContextType | null>(null);
