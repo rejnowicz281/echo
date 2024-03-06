@@ -9,7 +9,7 @@ import { RiDeleteBinLine } from "@react-icons/all-files/ri/RiDeleteBinLine";
 import { FC } from "react";
 import useChatContext from "../chat-provider";
 
-export type MessageContainerProps = {
+type MessageContainerProps = {
     message: Message;
 };
 

@@ -3,7 +3,7 @@ import ErrorContainer from "@/components/general/error-container";
 import MessagesSidebar from "@/components/messages/sidebar";
 import { FC } from "react";
 
-export type MessagesPageLayoutProps = {
+type MessagesPageLayoutProps = {
     children: React.ReactNode;
 };
 

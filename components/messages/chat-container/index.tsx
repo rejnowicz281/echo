@@ -8,7 +8,7 @@ import MessagesList from "./messages-list";
 
 export type Contact = User & { is_friend: boolean };
 
-export type ChatContainerProps = {
+type ChatContainerProps = {
     messages: Message[];
     contact: Contact;
 };

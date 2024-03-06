@@ -6,7 +6,7 @@ import { FC } from "react";
 import PostContainer from "../posts/post-container";
 import useUserContext from "./user-provider";
 
-export type RepliesListProps = {
+type RepliesListProps = {
     replies: Post[];
 };
 

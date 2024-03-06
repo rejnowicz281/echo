@@ -3,7 +3,7 @@ import ErrorContainer from "@/components/general/error-container";
 import FriendsList from "@/components/user-profile/friends-list";
 import { FC } from "react";
 
-export type UserPageProps = {
+type UserPageProps = {
     params: { id: string };
 };
 

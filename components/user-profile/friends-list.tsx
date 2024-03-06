@@ -8,7 +8,7 @@ import Link from "next/link";
 import { FC } from "react";
 import useUserContext from "./user-provider";
 
-export type FriendsListProps = {
+type FriendsListProps = {
     friends: User[];
 };
 

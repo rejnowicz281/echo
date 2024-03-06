@@ -7,7 +7,7 @@ import { IoMdArrowRoundBack } from "@react-icons/all-files/io/IoMdArrowRoundBack
 import Link from "next/link";
 import { FC } from "react";
 
-export type PostPageProps = {
+type PostPageProps = {
     params: { id: string };
 };
 

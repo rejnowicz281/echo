@@ -6,7 +6,7 @@ import { MdCancel } from "@react-icons/all-files/md/MdCancel";
 import Image from "next/image";
 import { Dispatch, FC, SetStateAction, useEffect, useRef, useState } from "react";
 
-export type ImagePickerProps = {
+type ImagePickerProps = {
     initialImage?: string;
     hideImage: boolean;
     setHideImage: Dispatch<SetStateAction<boolean>>;

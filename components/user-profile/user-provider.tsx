@@ -5,9 +5,9 @@ import { Post } from "@/types/posts";
 import { User } from "@/types/users";
 import { FC, createContext, useContext } from "react";
 
-export type UserType = User & { friendship: Friendship; posts: Post[] };
+type UserType = User & { friendship: Friendship; posts: Post[] };
 
-export type UserProviderProps = {
+type UserProviderProps = {
     children: React.ReactNode;
     user: UserType;
 };

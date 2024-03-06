@@ -9,7 +9,7 @@ import { UserProvider } from "@/components/user-profile/user-provider";
 import userDisplayName from "@/utils/general/user-display-name";
 import { FC } from "react";
 
-export type UserPageLayoutProps = {
+type UserPageLayoutProps = {
     children: React.ReactNode;
     params: { id: string };
 };

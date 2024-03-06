@@ -20,7 +20,7 @@ import { FC } from "react";
 import CreateActionHiddenInputs from "./create-action-hidden-inputs";
 import LikeList from "./like-list";
 
-export type ReplyButtonProps = {
+type ReplyButtonProps = {
     post: Post;
 };
 

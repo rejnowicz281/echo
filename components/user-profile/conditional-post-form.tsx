@@ -4,7 +4,7 @@ import useAuthContext from "@/providers/auth-provider";
 import { FC } from "react";
 import PostForm from "../posts/post-form";
 
-export type ConditionalPostFormProps = {
+type ConditionalPostFormProps = {
     userId: string;
 };
 

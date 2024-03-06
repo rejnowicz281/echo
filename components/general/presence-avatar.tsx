@@ -4,7 +4,7 @@ import usePresenceContext from "@/providers/presence-provider";
 import Image from "next/image";
 import { FC } from "react";
 
-export type PresenceAvatarProps = {
+type PresenceAvatarProps = {
     userId: string;
     src: string;
     alt?: string;

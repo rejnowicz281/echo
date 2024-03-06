@@ -15,7 +15,7 @@ import { FC } from "react";
 import SubmitButton from "../general/submit-button";
 import { Button } from "../shadcn/ui/button";
 
-export type FriendshipContainerProps = {
+type FriendshipContainerProps = {
     userVisited: User & { friendship?: Friendship };
 };
 

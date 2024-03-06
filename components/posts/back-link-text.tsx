@@ -2,7 +2,7 @@ import { Post } from "@/types/posts";
 import userDisplayName from "@/utils/general/user-display-name";
 import { FC } from "react";
 
-export type BackLinkTextProps = {
+type BackLinkTextProps = {
     post: Post;
 };
 

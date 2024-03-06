@@ -6,7 +6,7 @@ import { BiMessageSquareDots } from "@react-icons/all-files/bi/BiMessageSquareDo
 import Link from "next/link";
 import { FC } from "react";
 
-export type ChatWithButtonProps = {
+type ChatWithButtonProps = {
     userId: string;
 };
 

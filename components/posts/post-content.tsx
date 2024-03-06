@@ -6,7 +6,7 @@ import Link from "next/link";
 import { FC } from "react";
 import PresenceAvatar from "../general/presence-avatar";
 
-export type PostContentProps = {
+type PostContentProps = {
     post: Post;
 };
 

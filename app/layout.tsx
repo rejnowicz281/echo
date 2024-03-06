@@ -7,7 +7,7 @@ export const metadata: Metadata = {
     description: "all the things the other people do",
 };
 
-export type RootLayoutProps = {
+type RootLayoutProps = {
     children: React.ReactNode;
 };
 

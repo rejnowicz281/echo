@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FC } from "react";
 
-export type NavLinkProps = {
+type NavLinkProps = {
     href: string;
     text: string;
     icon: React.ReactNode;

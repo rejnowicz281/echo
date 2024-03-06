@@ -2,22 +2,20 @@
 
 import useAuthContext from "@/providers/auth-provider";
 import { Message } from "@/types/message";
-import { User } from "@/types/users";
 import { assignTimestamp } from "@/utils/messages/generate-timestamps";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useRouter } from "next/navigation";
 import { FC, createContext, useContext, useEffect, useOptimistic } from "react";
+import { Contact } from ".";
 
-export type Contact = User & { is_friend: boolean };
-
-export type ChatContextType = {
+type ChatContextType = {
     contact: Contact;
     optimisticMessages: Message[];
     addOptimisticMessage: (text: string, sender?: string) => void;
     deleteOptimisticMessage: (id: string) => void;
 };
 
-export type ChatProviderProps = {
+type ChatProviderProps = {
     children: React.ReactNode;
     messages: Message[];
     contact: Contact;

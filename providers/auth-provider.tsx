@@ -3,7 +3,7 @@
 import { User } from "@/types/users";
 import { FC, createContext, useContext } from "react";
 
-export type AuthProviderProps = {
+type AuthProviderProps = {
     children: React.ReactNode;
     user: User;
 };

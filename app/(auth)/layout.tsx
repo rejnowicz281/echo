@@ -3,7 +3,7 @@ import GithubLoginButton from "@/components/auth/github-login-button";
 import GoogleLoginButton from "@/components/auth/google-login-button";
 import { FC } from "react";
 
-export type AuthLayoutProps = {
+type AuthLayoutProps = {
     children: React.ReactNode;
 };
 

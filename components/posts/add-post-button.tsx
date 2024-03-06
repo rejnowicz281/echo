@@ -14,7 +14,7 @@ import { IoMdCreate } from "@react-icons/all-files/io/IoMdCreate";
 import { FC, useState } from "react";
 import PostForm from "./post-form";
 
-export type AddPostbuttonProps = {
+type AddPostbuttonProps = {
     dialogTitle?: string;
     dialogDescription?: string;
     dialogTrigger?: React.ReactNode;

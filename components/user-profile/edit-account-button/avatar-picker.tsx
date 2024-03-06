@@ -5,7 +5,7 @@ import { MdClose } from "@react-icons/all-files/md/MdClose";
 import Image from "next/image";
 import { FC, useRef, useState } from "react";
 
-export type AvatarPickerProps = {
+type AvatarPickerProps = {
     user: User;
 };
 

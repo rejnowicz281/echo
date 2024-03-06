@@ -2,7 +2,7 @@ import Link from "next/link";
 import { FC } from "react";
 import HardRefreshButton from "./hard-refresh-button";
 
-export type ErrorContainerProps = {
+type ErrorContainerProps = {
     error?: string;
 };
 

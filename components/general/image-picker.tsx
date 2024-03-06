@@ -3,7 +3,7 @@
 import { FaXmark } from "@react-icons/all-files/fa6/FaXmark";
 import { FC, useRef, useState } from "react";
 
-export type ImagePickerProps = {
+type ImagePickerProps = {
     name: string;
     id: string;
 };

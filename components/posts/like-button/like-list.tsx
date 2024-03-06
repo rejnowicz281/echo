@@ -7,7 +7,7 @@ import { Like } from "@/types/like";
 import Link from "next/link";
 import { FC, useEffect, useState } from "react";
 
-export type LikeListProps = {
+type LikeListProps = {
     postId: string;
 };
 

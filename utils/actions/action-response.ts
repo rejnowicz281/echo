@@ -1,12 +1,7 @@
+import { ActionResponse } from "@/types/action-response";
 import { ActionResponseConfig } from "@/types/action-response-config";
 import { revalidatePath as revalidate } from "next/cache";
 import { redirect } from "next/navigation";
-
-export type ActionResponse = {
-    action: string;
-    success: boolean;
-    [key: string]: any;
-};
 
 const actionResponse = (
     success = true,

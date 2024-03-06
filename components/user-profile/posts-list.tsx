@@ -6,7 +6,7 @@ import { Post } from "@/types/posts";
 import { User } from "@/types/users";
 import { FC } from "react";
 
-export type PostsListProps = {
+type PostsListProps = {
     user: User & { posts: Post[] };
 };
 

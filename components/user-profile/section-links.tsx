@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FC } from "react";
 
-export type SectionLinksProps = {
+type SectionLinksProps = {
     userId: string;
 };
 

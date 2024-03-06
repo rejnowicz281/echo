@@ -3,7 +3,7 @@ import ErrorContainer from "@/components/general/error-container";
 import ChatContainer from "@/components/messages/chat-container";
 import { FC } from "react";
 
-export type ChatPageProps = {
+type ChatPageProps = {
     params: {
         id: string; // Contact (user) id
     };

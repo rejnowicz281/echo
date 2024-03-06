@@ -7,7 +7,7 @@ import { FC, useState } from "react";
 import ContactLink from "./contact-link";
 import ContactSearch from "./contact-search";
 
-export type MessagesSidebarProps = {
+type MessagesSidebarProps = {
     contacts: User[];
 };
 

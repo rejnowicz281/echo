@@ -2,7 +2,7 @@
 
 import { FC } from "react";
 
-export type HardRefreshButtonProps = {
+type HardRefreshButtonProps = {
     className?: string;
     content?: string;
 };

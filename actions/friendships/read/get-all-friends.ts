@@ -1,12 +1,13 @@
+import { ActionResponse } from "@/types/action-response";
 import { User } from "@/types/users";
 import actionError from "@/utils/actions/action-error";
-import { ActionResponse } from "@/utils/actions/action-response";
+
 import actionSuccess from "@/utils/actions/action-success";
 import { createClient } from "@/utils/supabase/server";
 
-export type FriendType = User & { friendship_id: string };
+type FriendType = User & { friendship_id: string };
 
-export type FriendsActionResponse = ActionResponse & {
+type FriendsActionResponse = ActionResponse & {
     acceptedFriends?: FriendType[];
     sentRequests?: FriendType[];
     receivedRequests?: FriendType[];

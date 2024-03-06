@@ -4,7 +4,7 @@ import { AuthProvider } from "@/providers/auth-provider";
 import { PresenceProvider } from "@/providers/presence-provider";
 import { FC } from "react";
 
-export type DashboardLayoutProps = {
+type DashboardLayoutProps = {
     children: React.ReactNode;
 };
 

@@ -1,10 +1,10 @@
+import { ActionResponse } from "@/types/action-response";
 import { Post } from "@/types/posts";
 import actionError from "@/utils/actions/action-error";
-import { ActionResponse } from "@/utils/actions/action-response";
 import actionSuccess from "@/utils/actions/action-success";
 import { createClient } from "@/utils/supabase/server";
 
-export type PostActionResponse = ActionResponse & {
+type PostActionResponse = ActionResponse & {
     post?: Post & { replies: Post[] };
 };
 

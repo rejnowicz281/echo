@@ -7,7 +7,7 @@ import BackLinkText from "./back-link-text";
 import LikeButton from "./like-button";
 import OptionsButton from "./options-button";
 
-export type PostContainerProps = {
+type PostContainerProps = {
     post: Post;
     asLink?: boolean;
     showParentPost?: boolean;

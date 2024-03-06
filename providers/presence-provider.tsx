@@ -7,7 +7,7 @@ import { RealtimePresenceState } from "@supabase/supabase-js";
 import { useRouter } from "next/navigation";
 import { FC, createContext, useContext, useEffect, useState } from "react";
 
-export type PresenceContextType = {
+type PresenceContextType = {
     togglePresence: () => void;
     loggedUsers: string[];
     setLoggedUsers: React.Dispatch<React.SetStateAction<string[]>>;
@@ -15,11 +15,11 @@ export type PresenceContextType = {
     setPresenceEnabled: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-export type PresenceProviderProps = {
+type PresenceProviderProps = {
     children: React.ReactNode;
 };
 
-export type PresenceStateType = {
+type PresenceStateType = {
     [key: string]: [
         {
             user_id: string;

@@ -1,7 +1,7 @@
 import useAuthContext from "@/providers/auth-provider";
 import { FC } from "react";
 
-export type InputsProps = {
+type InputsProps = {
     postId: string;
 };
 

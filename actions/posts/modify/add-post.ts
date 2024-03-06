@@ -1,7 +1,7 @@
 "use server";
 
+import { ActionResponse } from "@/types/action-response";
 import actionError from "@/utils/actions/action-error";
-import { ActionResponse } from "@/utils/actions/action-response";
 import actionSuccess from "@/utils/actions/action-success";
 import { createClient } from "@/utils/supabase/server";
 

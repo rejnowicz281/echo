@@ -2,7 +2,7 @@ import { FC } from "react";
 import DeleteAccountButton from "./delete-account-button";
 import EditAccountButton from "./edit-account-button";
 
-export type SettingsContainerProps = {
+type SettingsContainerProps = {
     userId: string;
     isCurrentUser: boolean;
 };

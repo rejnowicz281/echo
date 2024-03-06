@@ -39,7 +39,7 @@ import {
 import { Button } from "../shadcn/ui/button";
 import PostForm from "./post-form";
 
-export type OptionsButtonProps = {
+type OptionsButtonProps = {
     post: Post;
 };
 

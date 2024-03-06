@@ -3,7 +3,7 @@ import ErrorContainer from "@/components/general/error-container";
 import RepliesList from "@/components/user-profile/replies-list";
 import { FC } from "react";
 
-export type UserRepliesPageProps = {
+type UserRepliesPageProps = {
     params: { id: string };
 };
 

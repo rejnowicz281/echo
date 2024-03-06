@@ -4,13 +4,13 @@ import addPost from "@/actions/posts/modify/add-post";
 import SubmitButton from "@/components/general/submit-button";
 import { Button } from "@/components/shadcn/ui/button";
 import { Textarea } from "@/components/shadcn/ui/textarea";
+import { ActionResponse } from "@/types/action-response";
 import { Post } from "@/types/posts";
-import { ActionResponse } from "@/utils/actions/action-response";
 import { VscLoading } from "@react-icons/all-files/vsc/VscLoading";
 import { FC, useRef, useState } from "react";
 import ImagePicker from "./image-picker";
 
-export type PostFormProps = {
+type PostFormProps = {
     content?: string;
     parent_post?: string;
     placeholder?: string;

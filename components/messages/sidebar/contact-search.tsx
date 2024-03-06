@@ -1,7 +1,7 @@
 import { FiSearch } from "@react-icons/all-files/fi/FiSearch";
 import { Dispatch, FC, SetStateAction, useState } from "react";
 
-export type ContactSearchProps = {
+type ContactSearchProps = {
     setSearchQuery: Dispatch<SetStateAction<string>>;
     searchQuery: string;
     contactsCount: number;
