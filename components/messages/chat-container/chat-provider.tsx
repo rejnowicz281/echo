@@ -31,6 +31,8 @@ export const ChatProvider: FC<ChatProviderProps> = ({ children, contact, message
     const supabase = createClientComponentClient();
 
     useEffect(() => {
+        if (contact.id === user.id) return;
+
         const messagesChannel = supabase
             .channel("messages")
             .on(
@@ -42,7 +44,7 @@ export const ChatProvider: FC<ChatProviderProps> = ({ children, contact, message
                     filter: `sender=eq.${contact.id}`,
                 },
                 (payload) => {
-                    console.log("Change received", payload.new);
+                    console.log("Change received, refreshing router", payload.new);
                     router.refresh();
                 }
             )

@@ -6,7 +6,7 @@ import ContactInfo from "./contact-info";
 import MessageForm from "./message-form";
 import MessagesList from "./messages-list";
 
-export type Contact = User & { is_friend: boolean };
+export type Contact = User & { is_friend: boolean; is_current_user: boolean };
 
 type ChatContainerProps = {
     messages: Message[];

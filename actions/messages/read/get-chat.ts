@@ -1,3 +1,4 @@
+import getCurrentUser from "@/actions/auth/read/get-current-user";
 import actionError from "@/utils/actions/action-error";
 import actionSuccess from "@/utils/actions/action-success";
 import generateTimestamps from "@/utils/messages/generate-timestamps";
@@ -8,25 +9,32 @@ const getChat = async (contactId: string) => {
 
     const supabase = createClient();
 
-    const {
-        data: { user },
-    } = await supabase.auth.getUser();
+    const { user } = await getCurrentUser();
 
-    if (!user) return actionError(actionName, { error: "You must be logged in to proceed" });
+    const isCurrentUser = user.id === contactId;
+
+    const messagesInfo = () =>
+        supabase
+            .from("messages")
+            .select("*")
+            .or(
+                `and(sender.eq.${contactId}, recipient.eq.${user.id}), and(sender.eq.${user.id}, recipient.eq.${contactId})`
+            )
+            .order("created_at", { ascending: true });
+
+    const contactInfo = () =>
+        isCurrentUser ? { data: user, error: null } : supabase.from("users").select("*").eq("id", contactId).single();
+
+    const friendCheckInfo = () =>
+        isCurrentUser
+            ? { data: false, error: null }
+            : supabase.rpc("check_if_friends", { user1: contactId, user2: user.id });
 
     const [
         { data: messages, error: messagesError },
         { data: contact, error: contactError },
         { data: is_friend, error: friendCheckError },
-    ] = await Promise.all([
-        supabase
-            .from("messages")
-            .select("*")
-            .or(`recipient.eq.${contactId}, sender.eq.${contactId}`)
-            .order("created_at", { ascending: true }),
-        supabase.from("users").select("*").eq("id", contactId).single(),
-        supabase.rpc("check_if_friends", { user1: contactId, user2: user.id }),
-    ]);
+    ] = await Promise.all([messagesInfo(), contactInfo(), friendCheckInfo()]);
 
     if (messagesError || contactError || friendCheckError)
         return actionError(actionName, {
@@ -42,6 +50,7 @@ const getChat = async (contactId: string) => {
             contact: {
                 ...contact,
                 is_friend,
+                is_current_user: isCurrentUser,
             },
         },
         { logData: false }

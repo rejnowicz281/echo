@@ -19,7 +19,11 @@ const ContactInfo = () => {
                     {contact.email !== displayName && <div className="text-gray-500">{contact.email}</div>}
                 </div>
             </Link>
-            <div className="text-gray-500">You are {!contact.is_friend ? "not" : ""} friends with this user</div>
+            <div className="text-gray-500">
+                {contact.is_current_user
+                    ? "You are currently talking to yourself"
+                    : `You are ${!contact.is_friend ? "not" : ""} friends with this user`}
+            </div>
         </div>
     );
 };
