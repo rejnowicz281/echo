@@ -1,5 +1,6 @@
 import PostContent from "@/components/posts/post-container/post-content";
 import { Post } from "@/types/posts";
+import clsx from "clsx";
 import Link from "next/link";
 import { FC } from "react";
 import BackLinkText from "../back-link-text";
@@ -16,9 +17,10 @@ type PostContainerProps = {
 const PostContainer: FC<PostContainerProps> = ({ post, asLink = true, showParentPost = false }) => {
     return (
         <div
-            className={`${
-                asLink ? `p-4 border hover:bg-gray-100 transition-colors rounded-lg ` : " "
-            }relative flex flex-col gap-3`}
+            className={clsx(
+                asLink && "p-4 border hover:bg-gray-100 transition-colors rounded-lg",
+                "relative flex flex-col gap-3"
+            )}
             key={post.id}
         >
             <OptionsButton post={post} />

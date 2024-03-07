@@ -28,7 +28,7 @@ const PresenceAvatar: FC<PresenceAvatarProps> = ({ userId, src, alt, avatarSize 
             <Image fill className="rounded-[50%]" src={src} alt={alt || `User ${userId}`} />
             {isLogged && (
                 <div
-                    className={`absolute bottom-0 right-0 border-[1px] border-solid border-black rounded-[50%] bg-green-400`}
+                    className="absolute bottom-0 right-0 border-[1px] border-solid border-black rounded-[50%] bg-green-400"
                     style={{ width: markerSize, height: markerSize }}
                 />
             )}

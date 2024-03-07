@@ -7,6 +7,7 @@ import timePassedSinceDate from "@/utils/messages/time-passed-since-date";
 import { FaRegCircle } from "@react-icons/all-files/fa/FaRegCircle";
 import { FaUser } from "@react-icons/all-files/fa/FaUser";
 import { FaUserFriends } from "@react-icons/all-files/fa/FaUserFriends";
+import clsx from "clsx";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FC } from "react";
@@ -44,9 +45,10 @@ const ContactLink: FC<ContactLinkProps> = ({ contact }) => {
             <div className="min-w-0 truncate flex items-center gap-3">
                 <PresenceAvatar userId={contact.id} avatarSize={50} src={contact.avatar_url} />
                 <div
-                    className={`truncate flex flex-col justify-evenly p-2 group-hover:bg-gray-200 rounded-lg transition-colors${
-                        pathname === href ? " bg-gray-200" : ""
-                    }`}
+                    className={clsx(
+                        "truncate flex flex-col justify-evenly p-2 group-hover:bg-gray-200 rounded-lg transition-colors",
+                        pathname === href && "bg-gray-200"
+                    )}
                 >
                     <div className="flex flex-row gap-2 items-center">
                         {contact.id === user.id ? (

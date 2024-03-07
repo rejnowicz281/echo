@@ -1,5 +1,6 @@
 "use client";
 
+import clsx from "clsx";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FC } from "react";
@@ -19,7 +20,7 @@ const NavLink: FC<NavLinkProps> = ({ href, text, icon, activeIcon }) => {
     return (
         <Link className="group flex flex-row items-center gap-2" href={href}>
             {isActive ? activeIcon : icon}{" "}
-            <div className={`p-2 transition-colors rounded-lg group-hover:bg-gray-200${isActive ? " font-bold" : ""}`}>
+            <div className={clsx("p-2 transition-colors rounded-lg group-hover:bg-gray-200", isActive && "font-bold")}>
                 {text}
             </div>
         </Link>

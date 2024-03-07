@@ -6,6 +6,7 @@ import { Message } from "@/types/message";
 import userDisplayName from "@/utils/general/user-display-name";
 import { AiOutlineLoading } from "@react-icons/all-files/ai/AiOutlineLoading";
 import { RiDeleteBinLine } from "@react-icons/all-files/ri/RiDeleteBinLine";
+import clsx from "clsx";
 import { FC } from "react";
 import useChatContext from "../chat-provider";
 
@@ -37,7 +38,7 @@ const MessageContainer: FC<MessageContainerProps> = ({ message }) => {
     };
 
     return (
-        <div className={`group flex p-5 gap-4 flex-wrap ${isSender ? `flex-row-reverse` : `flex-row`}`}>
+        <div className={clsx("group flex p-5 gap-4 flex-wrap", isSender ? "flex-row-reverse" : "flex-row")}>
             <div className="flex items-center justify-center">
                 <PresenceAvatar
                     avatarSize={50}
@@ -47,9 +48,10 @@ const MessageContainer: FC<MessageContainerProps> = ({ message }) => {
                 />
             </div>
             <div
-                className={`p-4 rounded max-w-[500px] ${
+                className={clsx(
+                    "p-4 rounded max-w-[500px]",
                     isSender ? "bg-gray-800 text-white" : "bg-gray-200 text-black"
-                }`}
+                )}
             >
                 {message.text}
             </div>
