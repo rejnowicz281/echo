@@ -41,7 +41,7 @@ export const ChatProvider: FC<ChatProviderProps> = ({ children, contact, message
                     schema: "public",
                     event: "*",
                     table: "messages",
-                    filter: `sender=eq.${contact.id}`,
+                    filter: `recipient=eq.${user.id}`,
                 },
                 (payload) => {
                     console.log("Change received, refreshing router", payload.new);
