@@ -1,14 +1,9 @@
-import { ActionResponse } from "@/types/action-response";
-import { Post } from "@/types/posts";
+import { PostsActionResponse } from "@/types/posts-action-response";
 import actionError from "@/utils/actions/action-error";
 import actionSuccess from "@/utils/actions/action-success";
 import { createClient } from "@/utils/supabase/server";
 
-type PostsActionResponse = ActionResponse & {
-    posts?: Post[];
-};
-
-const getDiscoveryPosts = async (): Promise<PostsActionResponse> => {
+const getDiscoveryPosts = async (page = 1): Promise<PostsActionResponse> => {
     const actionName = "getDiscoveryPosts";
 
     const supabase = createClient();
@@ -34,17 +29,22 @@ const getDiscoveryPosts = async (): Promise<PostsActionResponse> => {
 
     users.push(user.id);
 
+    const perPage = 5;
+
     // get posts of everyone except friends and current user
     const { data: posts, error: postsError } = await supabase
-        .from("posts_with_details")
+        .from("posts_with_like_id")
         .select("*, creator:users(*)")
         .not("creator", "in", `(${users.join(",")})`)
         .is("parent_post", null)
-        .order("created_at", { ascending: false });
+        .order("created_at", { ascending: false })
+        .range((page - 1) * perPage, page * perPage - 1);
 
     if (postsError) return actionError(actionName, { error: postsError.message });
 
-    return actionSuccess(actionName, { posts }, { logData: false });
+    const isLastPage = posts.length < perPage;
+
+    return actionSuccess(actionName, { posts, isLastPage }, { logData: false });
 };
 
 export default getDiscoveryPosts;

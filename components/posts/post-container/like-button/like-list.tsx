@@ -1,6 +1,6 @@
 "use client";
 
-import getPostLikes from "@/actions/likes/read/get-post-likes";
+import getPostLikes from "@/actions/likes/read/get-post-likes/server";
 import Loading from "@/components/general/loading";
 import PresenceAvatar from "@/components/general/presence-avatar";
 import { Like } from "@/types/like";

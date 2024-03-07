@@ -1,6 +1,7 @@
 import getPost from "@/actions/posts/read/get-post";
 import ErrorContainer from "@/components/general/error-container";
 import BackLinkText from "@/components/posts/back-link-text";
+import LazyReplies from "@/components/posts/lazy-replies";
 import PostContainer from "@/components/posts/post-container";
 import PostForm from "@/components/posts/post-form";
 import { IoMdArrowRoundBack } from "@react-icons/all-files/io/IoMdArrowRoundBack";
@@ -12,7 +13,7 @@ type PostPageProps = {
 };
 
 const PostPage: FC<PostPageProps> = async ({ params: { id } }) => {
-    const { post } = await getPost(id);
+    const { post, isLastPage } = await getPost(id);
 
     if (!post)
         return (
@@ -34,7 +35,7 @@ const PostPage: FC<PostPageProps> = async ({ params: { id } }) => {
                 <PostForm parent_post={id} content="Reply" placeholder="Reply to this post" />
             </div>
 
-            {post.replies.length > 0 && post.replies.map((reply) => <PostContainer key={reply.id} post={reply} />)}
+            <LazyReplies replies={post.replies} isLastPage={isLastPage} postId={id} />
         </div>
     );
 };

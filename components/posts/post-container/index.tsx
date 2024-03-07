@@ -1,11 +1,11 @@
-import PostContent from "@/components/posts/post-content";
-import ReplyButton from "@/components/posts/reply-button";
+import PostContent from "@/components/posts/post-container/post-content";
 import { Post } from "@/types/posts";
 import Link from "next/link";
 import { FC } from "react";
-import BackLinkText from "./back-link-text";
+import BackLinkText from "../back-link-text";
 import LikeButton from "./like-button";
 import OptionsButton from "./options-button";
+import ReplyButton from "./reply-button";
 
 type PostContainerProps = {
     post: Post;

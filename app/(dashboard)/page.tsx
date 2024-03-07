@@ -1,14 +1,12 @@
 import getFeedPosts from "@/actions/posts/read/get-feed-posts";
 import ErrorContainer from "@/components/general/error-container";
-import PostContainer from "@/components/posts/post-container";
+import LazyPosts from "@/components/posts/lazy-posts";
 import PostForm from "@/components/posts/post-form";
 
 const Home = async () => {
-    const data = await getFeedPosts();
+    const { posts, isLastPage, error } = await getFeedPosts();
 
-    const posts = data.posts;
-
-    if (data.error) return <ErrorContainer error={data.error} />;
+    if (error) return <ErrorContainer error={error} />;
     if (!posts) return <ErrorContainer error="An error has occurred while fetching your feed" />;
 
     return (
@@ -29,7 +27,7 @@ const Home = async () => {
                 <PostForm />
             </div>
 
-            {posts.length > 0 && posts.map((post) => <PostContainer key={post.id} post={post} />)}
+            <LazyPosts posts={posts} isLastPage={isLastPage} />
         </div>
     );
 };

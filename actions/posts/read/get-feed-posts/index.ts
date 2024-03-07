@@ -1,14 +1,9 @@
-import { ActionResponse } from "@/types/action-response";
-import { Post } from "@/types/posts";
+import { PostsActionResponse } from "@/types/posts-action-response";
 import actionError from "@/utils/actions/action-error";
 import actionSuccess from "@/utils/actions/action-success";
 import { createClient } from "@/utils/supabase/server";
 
-type PostsActionResponse = ActionResponse & {
-    posts?: Post[];
-};
-
-const getFeedPosts = async (): Promise<PostsActionResponse> => {
+const getFeedPosts = async (page = 1): Promise<PostsActionResponse> => {
     const actionName = "getFeedPosts";
 
     const supabase = createClient();
@@ -34,17 +29,22 @@ const getFeedPosts = async (): Promise<PostsActionResponse> => {
 
     users.push(user.id);
 
+    const perPage = 5;
+
     // get posts of friends and current user
     const { data: posts, error: postsError } = await supabase
-        .from("posts_with_details")
+        .from("posts_with_like_id")
         .select("*, creator:users(*)")
         .in("creator", users)
         .is("parent_post", null)
-        .order("created_at", { ascending: false });
+        .order("created_at", { ascending: false })
+        .range((page - 1) * perPage, page * perPage - 1); // 5 posts per page
 
     if (postsError) return actionError(actionName, { error: postsError.message });
 
-    return actionSuccess(actionName, { posts }, { logData: false });
+    const isLastPage = posts.length < perPage; // if less than 5 posts, it's the last page
+
+    return actionSuccess(actionName, { posts, isLastPage }, { logData: false });
 };
 
 export default getFeedPosts;

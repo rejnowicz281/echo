@@ -37,11 +37,12 @@ const getUser = async (id: string): Promise<UserActionResponse> => {
 
     const userPostsInfoQuery = () =>
         supabase
-            .from("posts_with_details")
+            .from("posts_with_like_id")
             .select("*")
             .eq("creator", id)
             .is("parent_post", null)
-            .order("created_at", { ascending: false });
+            .order("created_at", { ascending: false })
+            .range(0, 4); // get the first page of posts (next page will be handled by getUserPosts)
 
     const [friendshipInfo, userInfo, userPostsInfo] = await Promise.all([
         friendshipInfoQuery(),

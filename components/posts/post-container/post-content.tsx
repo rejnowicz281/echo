@@ -1,10 +1,10 @@
+import PresenceAvatar from "@/components/general/presence-avatar";
 import { Post } from "@/types/posts";
 import formatCreateDate from "@/utils/general/format-create-date";
 import userDisplayName from "@/utils/general/user-display-name";
 import Image from "next/image";
 import Link from "next/link";
 import { FC } from "react";
-import PresenceAvatar from "../general/presence-avatar";
 
 type PostContentProps = {
     post: Post;

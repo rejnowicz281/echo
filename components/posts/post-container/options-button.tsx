@@ -2,6 +2,7 @@
 
 import deletePost from "@/actions/posts/modify/delete-post";
 import updatePost from "@/actions/posts/modify/update-post";
+import SubmitButton from "@/components/general/submit-button";
 import {
     Dialog,
     DialogContent,
@@ -23,7 +24,6 @@ import actionSuccess from "@/utils/actions/action-success";
 import { SlOptions } from "@react-icons/all-files/sl/SlOptions";
 import { usePathname, useRouter } from "next/navigation";
 import { FC, useState } from "react";
-import SubmitButton from "../general/submit-button";
 import {
     AlertDialog,
     AlertDialogAction,
@@ -35,9 +35,9 @@ import {
     AlertDialogPortal,
     AlertDialogTitle,
     AlertDialogTrigger,
-} from "../shadcn/ui/alert-dialog";
-import { Button } from "../shadcn/ui/button";
-import PostForm from "./post-form";
+} from "../../shadcn/ui/alert-dialog";
+import { Button } from "../../shadcn/ui/button";
+import PostForm from "../post-form";
 
 type OptionsButtonProps = {
     post: Post;

@@ -1,22 +1,24 @@
 "use client";
 
-import PostContainer from "@/components/posts/post-container";
+import getUserPosts from "@/actions/users/read/get-user-posts/server";
 import useAuthContext from "@/providers/auth-provider";
 import { Post } from "@/types/posts";
 import { User } from "@/types/users";
 import { FC } from "react";
+import LazyPosts from "../posts/lazy-posts";
 
-type PostsListProps = {
+type LazyUserPostsProps = {
     user: User & { posts: Post[] };
+    postId?: string;
 };
 
-const PostsList: FC<PostsListProps> = ({ user }) => {
+const LazyUserPosts: FC<LazyUserPostsProps> = ({ user }) => {
     const authData = useAuthContext();
 
     const currentUser = authData.user;
 
     return user.posts.length > 0 ? (
-        user.posts.map((post) => <PostContainer key={post.id} post={post} />)
+        <LazyPosts posts={user.posts} getPostsAction={(page: number) => getUserPosts(page, user)} isLastPage={false} />
     ) : (
         <div className="text-gray-500 text-center">
             {currentUser.id === user.id
@@ -29,4 +31,4 @@ const PostsList: FC<PostsListProps> = ({ user }) => {
     );
 };
 
-export default PostsList;
+export default LazyUserPosts;

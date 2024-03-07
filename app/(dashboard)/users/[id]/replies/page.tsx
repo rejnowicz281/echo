@@ -1,6 +1,6 @@
 import getUserReplies from "@/actions/users/read/get-user-replies";
 import ErrorContainer from "@/components/general/error-container";
-import RepliesList from "@/components/user-profile/replies-list";
+import LazyUserReplies from "@/components/user-profile/lazy-user-replies";
 import { FC } from "react";
 
 type UserRepliesPageProps = {
@@ -8,11 +8,11 @@ type UserRepliesPageProps = {
 };
 
 const UserRepliesPage: FC<UserRepliesPageProps> = async ({ params: { id } }) => {
-    const { replies } = await getUserReplies(id);
+    const { posts: replies, isLastPage } = await getUserReplies(1, id);
 
     if (!replies) return <ErrorContainer error="An error has occured while fetching this user's replies" />;
 
-    return <RepliesList replies={replies} />;
+    return <LazyUserReplies replies={replies} isLastPage={isLastPage} userId={id} />;
 };
 
 export default UserRepliesPage;

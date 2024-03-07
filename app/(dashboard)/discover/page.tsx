@@ -1,14 +1,12 @@
-import getDiscoveryPosts from "@/actions/posts/read/get-discovery-posts";
+import getDiscoveryPosts from "@/actions/posts/read/get-discovery-posts/server";
 import ErrorContainer from "@/components/general/error-container";
-import PostContainer from "@/components/posts/post-container";
+import LazyPosts from "@/components/posts/lazy-posts";
 import Link from "next/link";
 
 const DiscoverPage = async () => {
-    const data = await getDiscoveryPosts();
+    const { posts, isLastPage, error } = await getDiscoveryPosts();
 
-    const posts = data.posts;
-
-    if (data.error) return <ErrorContainer error={data.error} />;
+    if (error) return <ErrorContainer error={error} />;
     if (!posts) return <ErrorContainer error="An error has occurred while fetching the posts" />;
 
     return (
@@ -35,7 +33,7 @@ const DiscoverPage = async () => {
                 </div>
             </div>
 
-            {posts.length > 0 && posts.map((post) => <PostContainer key={post.id} post={post} />)}
+            <LazyPosts posts={posts} getPostsAction={getDiscoveryPosts} isLastPage={isLastPage} />
         </div>
     );
 };
