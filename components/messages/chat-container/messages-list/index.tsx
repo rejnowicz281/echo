@@ -25,25 +25,26 @@ const MessagesList = () => {
         }
     }, [messages]);
 
+    if (messages.length <= 0)
+        return (
+            <div className="flex flex-col flex-1 text-gray-500 text-lg items-center justify-center p-3 word-break">
+                No messages found.
+            </div>
+        );
+
     return (
         <div className="flex flex-col flex-1 relative">
             <div ref={listRef} className="absolute inset-0 pt-5 overflow-y-auto word-break flex-1">
-                {messages.length > 0 ? (
-                    messages.map((message) => (
-                        <div key={message.id}>
-                            {message.timestamp && (
-                                <div className="text-center text-gray-500 text-sm font-bold">
-                                    {formatMessageDate(message.created_at)}
-                                </div>
-                            )}
-                            <MessageContainer message={message} />
-                        </div>
-                    ))
-                ) : (
-                    <div className="flex flex-col flex-1 items-center justify-center text-lg p-3 word-break">
-                        No messages found.
+                {messages.map((message) => (
+                    <div key={message.id}>
+                        {message.timestamp && (
+                            <div className="text-center text-gray-500 text-sm font-bold">
+                                {formatMessageDate(message.created_at)}
+                            </div>
+                        )}
+                        <MessageContainer message={message} />
                     </div>
-                )}
+                ))}
             </div>
         </div>
     );

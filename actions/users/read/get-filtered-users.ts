@@ -19,7 +19,7 @@ const getFilteredUsers = async (filter: string): Promise<UsersActionResponse> =>
 
     if (error) return actionError(actionName, error);
 
-    return actionSuccess(actionName, { users });
+    return actionSuccess(actionName, { users }, { logData: false });
 };
 
 export default getFilteredUsers;

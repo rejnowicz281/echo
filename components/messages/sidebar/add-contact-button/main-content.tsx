@@ -27,7 +27,7 @@ const MainContent: FC<MainContentProps> = ({ closeDialog }) => {
             }
 
             setLoading(true);
-            const { users } = await getFilteredUsers(debouncedSearch);
+            const { users } = await getFilteredUsers(debouncedSearch.trim());
             setLoading(false);
 
             if (users) setUsers(users);
