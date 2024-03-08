@@ -25,20 +25,25 @@ const getChat = async (contactId: string) => {
     const contactInfo = () =>
         isCurrentUser ? { data: user, error: null } : supabase.from("users").select("*").eq("id", contactId).single();
 
-    const friendCheckInfo = () =>
+    const friendshipInfo = () =>
         isCurrentUser
-            ? { data: false, error: null }
-            : supabase.rpc("check_if_friends", { user1: contactId, user2: user.id });
+            ? { data: [undefined], error: null }
+            : supabase
+                  .from("friendships")
+                  .select("*")
+                  .or(
+                      `and(requester.eq.${user.id}, recipient.eq.${contactId}), and(requester.eq.${contactId}, recipient.eq.${user.id})`
+                  );
 
     const [
         { data: messages, error: messagesError },
         { data: contact, error: contactError },
-        { data: is_friend, error: friendCheckError },
-    ] = await Promise.all([messagesInfo(), contactInfo(), friendCheckInfo()]);
+        { data: friendship, error: friendshipError },
+    ] = await Promise.all([messagesInfo(), contactInfo(), friendshipInfo()]);
 
-    if (messagesError || contactError || friendCheckError)
+    if (messagesError || contactError || friendshipError)
         return actionError(actionName, {
-            error: messagesError?.message || contactError?.message || friendCheckError?.message,
+            error: messagesError?.message || contactError?.message || friendshipError?.message,
         });
 
     if (messages) generateTimestamps(messages);
@@ -49,7 +54,7 @@ const getChat = async (contactId: string) => {
             messages,
             contact: {
                 ...contact,
-                is_friend,
+                friendship: friendship ? friendship[0] : undefined,
                 is_current_user: isCurrentUser,
             },
         },
