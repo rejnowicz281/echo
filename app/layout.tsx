@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import NextTopLoader from "nextjs-toploader";
 import { FC } from "react";
 import "./globals.css";
 
@@ -14,7 +15,10 @@ type RootLayoutProps = {
 const RootLayout: FC<RootLayoutProps> = ({ children }) => {
     return (
         <html className="h-full" lang="en">
-            <body className="min-h-full flex flex-col">{children}</body>
+            <body className="min-h-full flex flex-col">
+                <NextTopLoader height={4} showSpinner={false} />
+                {children}
+            </body>
         </html>
     );
 };
