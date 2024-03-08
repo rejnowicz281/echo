@@ -1,19 +1,17 @@
 import AddPostButton from "@/components/posts/add-post-button";
 import { BiMessageSquareDots } from "@react-icons/all-files/bi/BiMessageSquareDots";
 import { BiSolidMessageSquareDots } from "@react-icons/all-files/bi/BiSolidMessageSquareDots";
-import { GoHome } from "@react-icons/all-files/go/GoHome";
-import { GoHomeFill } from "@react-icons/all-files/go/GoHomeFill";
 import { HiOutlineUsers } from "@react-icons/all-files/hi/HiOutlineUsers";
 import { HiUsers } from "@react-icons/all-files/hi/HiUsers";
 import { IoLeafOutline } from "@react-icons/all-files/io5/IoLeafOutline";
 import { IoLeafSharp } from "@react-icons/all-files/io5/IoLeafSharp";
-import { MdOutlinePersonSearch } from "@react-icons/all-files/md/MdOutlinePersonSearch";
-import { MdPersonSearch } from "@react-icons/all-files/md/MdPersonSearch";
 import CurrentUser from "./current-user";
+import HomeLink from "./home-link";
 import NavLink from "./nav-link";
 import ProfileLink from "./profile-link";
 import SignOutButton from "./sign-out-button";
 import TogglePresenceButton from "./toggle-presence-button";
+import UsersLink from "./users-link";
 
 const MainSidebar = () => {
     return (
@@ -25,12 +23,7 @@ const MainSidebar = () => {
                 <AddPostButton />
             </div>
             <div className="flex flex-col gap-5">
-                <NavLink
-                    href="/"
-                    text="Home"
-                    icon={<GoHome className="text-3xl" />}
-                    activeIcon={<GoHomeFill className="text-3xl" />}
-                />
+                <HomeLink />
                 <NavLink
                     href="/discover"
                     text="Discover"
@@ -50,12 +43,7 @@ const MainSidebar = () => {
                     icon={<HiOutlineUsers className="text-3xl" />}
                     activeIcon={<HiUsers className="text-3xl" />}
                 />
-                <NavLink
-                    href="/users"
-                    text="Users"
-                    icon={<MdOutlinePersonSearch className="text-3xl" />}
-                    activeIcon={<MdPersonSearch className="text-3xl" />}
-                />
+                <UsersLink />
             </div>
         </div>
     );

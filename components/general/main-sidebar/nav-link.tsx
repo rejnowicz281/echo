@@ -10,12 +10,17 @@ type NavLinkProps = {
     text: string;
     icon: React.ReactNode;
     activeIcon: React.ReactNode;
+    activeCondition?: (pathname: string) => boolean;
 };
 
-const NavLink: FC<NavLinkProps> = ({ href, text, icon, activeIcon }) => {
+const NavLink: FC<NavLinkProps> = ({ href, text, icon, activeIcon, activeCondition }) => {
     const pathname = usePathname();
 
-    const isActive = pathname === href;
+    const isActive = activeCondition
+        ? activeCondition(pathname)
+        : href === "/"
+        ? pathname === href
+        : pathname.startsWith(href);
 
     return (
         <Link className="group flex flex-row items-center gap-2" href={href}>
