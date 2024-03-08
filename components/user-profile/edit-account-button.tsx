@@ -3,6 +3,7 @@
 import updateAccount from "@/actions/auth/modify/update-account";
 import SubmitButton from "@/components/general/submit-button";
 import { Button } from "@/components/shadcn/ui/button";
+import { Checkbox } from "@/components/shadcn/ui/checkbox";
 import {
     Dialog,
     DialogContent,
@@ -12,15 +13,14 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/components/shadcn/ui/dialog";
-import { Label } from "@/components/shadcn/ui/label";
-import useAuthContext from "@/providers/auth-provider";
-
-import { Checkbox } from "@/components/shadcn/ui/checkbox";
 import { Input } from "@/components/shadcn/ui/input";
+import { Label } from "@/components/shadcn/ui/label";
+import AvatarPicker from "@/components/users/avatar-picker";
+import useAuthContext from "@/providers/auth-provider";
 import { MdEdit } from "@react-icons/all-files/md/MdEdit";
 import Image from "next/image";
 import { useState } from "react";
-import AvatarPicker from "./avatar-picker";
+import PasswordInput from "../general/password-input";
 
 const EditAccountButton = () => {
     const { user } = useAuthContext();
@@ -63,7 +63,7 @@ const EditAccountButton = () => {
                 <form onSubmit={() => setError(null)} action={handleUpdate}>
                     <div className="flex flex-col items-center gap-3">
                         {isEmailProvider ? (
-                            <AvatarPicker user={user} />
+                            <AvatarPicker defaultUrl={user.avatar_url} />
                         ) : (
                             <Image
                                 src={user.avatar_url}
@@ -108,13 +108,7 @@ const EditAccountButton = () => {
                                     <Label htmlFor="password" className="text-right">
                                         Password
                                     </Label>
-                                    <Input
-                                        id="password"
-                                        name="password"
-                                        type="password"
-                                        placeholder="********"
-                                        className="col-span-3"
-                                    />
+                                    <PasswordInput className="col-span-3" />
                                 </div>
                                 <div className="flex items-center justify-end">
                                     <Checkbox name="reset_avatar" id="reset_avatar" />

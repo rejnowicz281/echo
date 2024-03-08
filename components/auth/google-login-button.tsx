@@ -1,24 +1,30 @@
 import googleSignIn from "@/actions/auth/modify/google-sign-in";
 import SubmitButton from "@/components/general/submit-button";
+import { Button } from "@/components/shadcn/ui/button";
 import { FcGoogle } from "@react-icons/all-files/fc/FcGoogle";
+import { VscLoading } from "@react-icons/all-files/vsc/VscLoading";
 
 const GoogleLoginButton = () => {
     return (
-        <form action={googleSignIn}>
-            <SubmitButton
-                content={
-                    <>
-                        <FcGoogle />
-                        Login With Google
-                    </>
-                }
-                loading={
-                    <>
-                        <FcGoogle />
-                        Logging in...
-                    </>
-                }
-            />
+        <form className="flex flex-col" action={googleSignIn}>
+            <Button asChild className="bg-blue-500 hover:bg-blue-400 font-semibold flex flex-row items-center gap-1">
+                <SubmitButton
+                    content={
+                        <>
+                            <div className="bg-white rounded-full">
+                                <FcGoogle className="text-xl" />
+                            </div>
+                            Google
+                        </>
+                    }
+                    loading={
+                        <>
+                            <VscLoading className="text-xl animate-spin" />
+                            Google
+                        </>
+                    }
+                />
+            </Button>
         </form>
     );
 };

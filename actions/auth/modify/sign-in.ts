@@ -11,7 +11,7 @@ const signIn = async (formData: FormData) => {
     const password = formData.get("password");
 
     if (typeof email !== "string" || typeof password !== "string")
-        return actionError(actionName, {}, { redirectPath: "/login?message=Invalid Email or Password" });
+        return actionError(actionName, {}, { redirectPath: "/login?error=Invalid Email or Password" });
 
     const supabase = createClient();
 
@@ -20,7 +20,7 @@ const signIn = async (formData: FormData) => {
         password,
     });
 
-    if (error) return actionError(actionName, {}, { redirectPath: "/login?message=Invalid Email or Password" });
+    if (error) return actionError(actionName, {}, { redirectPath: "/login?error=Invalid Email or Password" });
 
     return actionSuccess(actionName, {}, { redirectPath: "/" });
 };

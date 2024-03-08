@@ -1,24 +1,15 @@
-import DemoLoginButton from "@/components/auth/demo-login-button";
-import GithubLoginButton from "@/components/auth/github-login-button";
-import GoogleLoginButton from "@/components/auth/google-login-button";
-import { FC } from "react";
+import clsx from "clsx";
+import { GeistSans } from "geist/font/sans";
+import { Metadata } from "next";
+import { FC, ReactNode } from "react";
 
-type AuthLayoutProps = {
-    children: React.ReactNode;
+export const metadata: Metadata = {
+    title: "echo",
+    description: "all the things the other people do",
 };
 
-const AuthLayout: FC<AuthLayoutProps> = async ({ children }) => {
-    return (
-        <div>
-            <h1>echo</h1>
-
-            <DemoLoginButton />
-            <GithubLoginButton />
-            <GoogleLoginButton />
-
-            {children}
-        </div>
-    );
+const AuthLayout: FC<{ children: ReactNode }> = ({ children }) => {
+    return <div className={clsx("flex-1 flex flex-col", GeistSans.className)}>{children}</div>;
 };
 
 export default AuthLayout;
