@@ -15,7 +15,7 @@ const updateAccount = async (formData: FormData) => {
 
     if (!user) return actionError(actionName, { error: "You must be logged in to update your account." });
 
-    if (user.id === process.env.DEMO_USER_ID)
+    if (user.id === process.env.DEMO_USER_ID || user.email === "demo@demo.demo")
         return actionError(actionName, { error: "You cannot update this demo account." });
 
     const isEmailProvider = user.app_metadata.provider === "email";
