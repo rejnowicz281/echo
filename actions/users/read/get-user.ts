@@ -1,13 +1,12 @@
 import getCurrentUser from "@/actions/auth/read/get-current-user";
 import { ActionResponse } from "@/types/action-response";
 import { Friendship } from "@/types/friendships";
-import { Post } from "@/types/posts";
 import { User } from "@/types/users";
 import actionError from "@/utils/actions/action-error";
 import actionSuccess from "@/utils/actions/action-success";
 import { createClient } from "@/utils/supabase/server";
 
-type UserType = User & { friendship: Friendship; posts: Post[]; isCurrentUser: boolean };
+type UserType = User & { friendship: Friendship; is_current_user: boolean };
 
 type UserActionResponse = ActionResponse & {
     user?: UserType;
@@ -35,31 +34,15 @@ const getUser = async (id: string): Promise<UserActionResponse> => {
     const userInfoQuery = () =>
         isCurrentUser ? { data: user, error: null } : supabase.from("users").select("*").eq("id", id).single();
 
-    const userPostsInfoQuery = () =>
-        supabase
-            .from("posts_with_like_id")
-            .select("*")
-            .eq("creator", id)
-            .is("parent_post", null)
-            .order("created_at", { ascending: false })
-            .range(0, 4); // get the first page of posts (next page will be handled by getUserPosts)
+    const [friendshipInfo, userInfo] = await Promise.all([friendshipInfoQuery(), userInfoQuery()]);
 
-    const [friendshipInfo, userInfo, userPostsInfo] = await Promise.all([
-        friendshipInfoQuery(),
-        userInfoQuery(),
-        userPostsInfoQuery(),
-    ]);
-
-    if (userInfo.error || friendshipInfo.error || userPostsInfo.error)
-        return actionError(actionName, { error: userInfo.error || friendshipInfo.error || userPostsInfo.error });
-
-    const posts = userPostsInfo.data.map((post) => ({ ...post, creator: userInfo.data }));
+    if (userInfo.error || friendshipInfo.error)
+        return actionError(actionName, { error: userInfo.error || friendshipInfo.error });
 
     const finalUser = {
         ...userInfo.data,
-        posts,
         friendship: friendshipInfo.data[0],
-        isCurrentUser,
+        is_current_user: isCurrentUser,
     };
 
     return actionSuccess(actionName, { user: finalUser });

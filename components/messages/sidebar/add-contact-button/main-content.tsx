@@ -1,6 +1,6 @@
 "use client";
 
-import getFilteredUsers from "@/actions/users/read/get-filtered-users";
+import getFilteredUsers from "@/actions/users/read/get-filtered-users/server";
 import PresenceAvatar from "@/components/general/presence-avatar";
 import { Skeleton } from "@/components/shadcn/ui/skeleton";
 import useDebounce from "@/hooks/use-debounce";

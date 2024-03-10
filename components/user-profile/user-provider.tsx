@@ -1,11 +1,10 @@
 "use client";
 
 import { Friendship } from "@/types/friendships";
-import { Post } from "@/types/posts";
 import { User } from "@/types/users";
 import { FC, createContext, useContext } from "react";
 
-type UserType = User & { friendship: Friendship; posts: Post[] };
+type UserType = User & { friendship: Friendship };
 
 type UserProviderProps = {
     children: React.ReactNode;

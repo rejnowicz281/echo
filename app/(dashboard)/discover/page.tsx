@@ -1,10 +1,14 @@
-import getDiscoveryPosts from "@/actions/posts/read/get-discovery-posts/server";
+import getDiscoveryPosts from "@/actions/posts/read/get-discovery-posts";
 import ErrorContainer from "@/components/general/error-container";
-import LazyPosts from "@/components/posts/lazy-posts";
+import PostsPagination from "@/components/posts/posts-pagination";
+import { NextSearchParams } from "@/types/next-search-params";
+import extractPageFromParams from "@/utils/general/extract-page-from-params";
 import Link from "next/link";
+import { FC } from "react";
 
-const DiscoverPage = async () => {
-    const { posts, isLastPage, error } = await getDiscoveryPosts();
+const DiscoverPage: FC<{ searchParams: NextSearchParams }> = async ({ searchParams }) => {
+    const page = extractPageFromParams(searchParams);
+    const { posts, isLastPage, error } = await getDiscoveryPosts(page);
 
     if (error) return <ErrorContainer error={error} />;
     if (!posts) return <ErrorContainer error="An error has occurred while fetching the posts" />;
@@ -16,7 +20,7 @@ const DiscoverPage = async () => {
                 <div className="text-gray-500 flex flex-col gap-1">
                     <p>Welcome to the discovery page! Here you can see posts of users you aren't friends with.</p>
 
-                    {posts.length <= 0 && (
+                    {posts.length <= 0 && page === 1 && (
                         <p>
                             It looks like there are no posts to show here... Click{" "}
                             <Link
@@ -33,7 +37,7 @@ const DiscoverPage = async () => {
                 </div>
             </div>
 
-            <LazyPosts posts={posts} getPostsAction={getDiscoveryPosts} isLastPage={isLastPage} />
+            <PostsPagination posts={posts} currentPage={page} isLastPage={isLastPage} />
         </div>
     );
 };

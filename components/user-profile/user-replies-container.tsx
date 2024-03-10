@@ -1,30 +1,24 @@
 "use client";
 
-import getUserReplies from "@/actions/users/read/get-user-replies/server";
 import useAuthContext from "@/providers/auth-provider";
 import { Post } from "@/types/posts";
 import { FC } from "react";
-import LazyPosts from "../posts/lazy-posts";
+import PostsPagination from "../posts/posts-pagination";
 import useUserContext from "./user-provider";
 
-type LazyUserRepliesProps = {
+type UserRepliesContainerProps = {
     replies: Post[];
     isLastPage?: boolean;
-    userId: string;
+    currentPage: number;
 };
 
-const LazyUserReplies: FC<LazyUserRepliesProps> = ({ replies, isLastPage, userId }) => {
+const UserRepliesContainer: FC<UserRepliesContainerProps> = ({ replies, isLastPage, currentPage }) => {
     const { user: currentUser } = useAuthContext();
     const { user } = useUserContext();
 
     return replies.length > 0 ? (
         <div className="mx-auto max-w-[700px] w-full flex flex-col gap-10">
-            <LazyPosts
-                posts={replies}
-                isLastPage={isLastPage}
-                showParentPost={true}
-                getPostsAction={(page: number) => getUserReplies(page, userId)}
-            />
+            <PostsPagination posts={replies} isLastPage={isLastPage} currentPage={currentPage} showParentPost={true} />
         </div>
     ) : (
         <div className="text-gray-500 text-center">
@@ -38,4 +32,4 @@ const LazyUserReplies: FC<LazyUserRepliesProps> = ({ replies, isLastPage, userId
     );
 };
 
-export default LazyUserReplies;
+export default UserRepliesContainer;

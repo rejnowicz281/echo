@@ -1,10 +1,17 @@
 import getFeedPosts from "@/actions/posts/read/get-feed-posts";
 import ErrorContainer from "@/components/general/error-container";
-import LazyPosts from "@/components/posts/lazy-posts";
 import PostForm from "@/components/posts/post-form";
+import PostsPagination from "@/components/posts/posts-pagination";
+import { NextSearchParams } from "@/types/next-search-params";
+import extractPageFromParams from "@/utils/general/extract-page-from-params";
+import { FC } from "react";
 
-const Home = async () => {
-    const { posts, isLastPage, error } = await getFeedPosts();
+const Home: FC<{
+    searchParams: NextSearchParams;
+}> = async ({ searchParams }) => {
+    const page = extractPageFromParams(searchParams);
+
+    const { posts, isLastPage, error } = await getFeedPosts(page);
 
     if (error) return <ErrorContainer error={error} />;
     if (!posts) return <ErrorContainer error="An error has occurred while fetching your feed" />;
@@ -22,12 +29,14 @@ const Home = async () => {
                         To create a post, simply type out your thoughts in the input below and click the "Post" button.
                         Feel free to add images to your posts as well!
                     </p>
-                    {posts.length <= 0 && <p>It looks like your feed is empty... How about adding a post?</p>}
+                    {posts.length <= 0 && page === 1 && (
+                        <p>It looks like your feed is empty... How about adding a post?</p>
+                    )}
                 </div>
                 <PostForm />
             </div>
 
-            <LazyPosts posts={posts} isLastPage={isLastPage} />
+            <PostsPagination posts={posts} currentPage={page} isLastPage={isLastPage} />
         </div>
     );
 };

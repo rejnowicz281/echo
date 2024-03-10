@@ -1,21 +1,27 @@
 import getPost from "@/actions/posts/read/get-post";
+import getPostReplies from "@/actions/posts/read/get-post-replies";
 import ErrorContainer from "@/components/general/error-container";
 import BackLinkText from "@/components/posts/back-link-text";
-import LazyReplies from "@/components/posts/lazy-replies";
 import PostContainer from "@/components/posts/post-container";
 import PostForm from "@/components/posts/post-form";
+import PostsPagination from "@/components/posts/posts-pagination";
+import { NextSearchParams } from "@/types/next-search-params";
+import extractPageFromParams from "@/utils/general/extract-page-from-params";
 import { IoMdArrowRoundBack } from "@react-icons/all-files/io/IoMdArrowRoundBack";
 import Link from "next/link";
 import { FC } from "react";
 
 type PostPageProps = {
     params: { id: string };
+    searchParams: NextSearchParams;
 };
 
-const PostPage: FC<PostPageProps> = async ({ params: { id } }) => {
-    const { post, isLastPage } = await getPost(id);
+const PostPage: FC<PostPageProps> = async ({ params: { id }, searchParams }) => {
+    const page = extractPageFromParams(searchParams);
 
-    if (!post)
+    const [{ post }, { replies, isLastPage }] = await Promise.all([getPost(id), getPostReplies(page, id)]);
+
+    if (!post || !replies)
         return (
             <ErrorContainer error="An error has occured while fetching this post. Are you sure the ID is correct?" />
         );
@@ -35,7 +41,7 @@ const PostPage: FC<PostPageProps> = async ({ params: { id } }) => {
                 <PostForm parent_post={id} content="Reply" placeholder="Reply to this post" />
             </div>
 
-            <LazyReplies replies={post.replies} isLastPage={isLastPage} postId={id} />
+            <PostsPagination posts={replies} isLastPage={isLastPage} currentPage={page} />
         </div>
     );
 };

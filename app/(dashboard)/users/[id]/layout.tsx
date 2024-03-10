@@ -43,7 +43,7 @@ const UserPageLayout: FC<UserPageLayoutProps> = async ({ children, params: { id 
                     <FriendshipContainer userVisited={user} />
                 </div>
 
-                <SettingsContainer userId={user.id} isCurrentUser={user.isCurrentUser} />
+                <SettingsContainer userId={user.id} isCurrentUser={user.is_current_user} />
             </div>
             <UserProvider user={user}>{children}</UserProvider>
         </div>
