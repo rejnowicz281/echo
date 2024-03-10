@@ -13,13 +13,29 @@ const timePassedSinceDate = (date: string) => {
     const yearsPassed = daysPassed / 365;
 
     if (secondsPassed < 60) return "Just now";
-    if (minutesPassed < 60) return `${Math.floor(minutesPassed)} min ago`;
-    if (hoursPassed < 24) return `${Math.floor(hoursPassed)} hours ago`;
-    if (daysPassed < 7) return `${Math.floor(daysPassed)} days ago`;
-    if (weeksPassed < 4) return `${Math.floor(weeksPassed)} weeks ago`;
-    if (monthsPassed < 12) return `${Math.floor(monthsPassed)} months ago`;
 
-    return `${Math.floor(yearsPassed)} yrs ago`;
+    if (minutesPassed < 60) {
+        const count = Math.floor(minutesPassed);
+        return `${count} min ago`;
+    }
+
+    const pluralizedAgo = (number: number, word: string) => {
+        const count = Math.floor(number);
+
+        const pluralize = () => (count === 1 ? word : `${word}s`);
+
+        return `${count} ${pluralize()} ago`;
+    };
+
+    if (hoursPassed < 24) return pluralizedAgo(hoursPassed, "hour");
+
+    if (daysPassed < 7) return pluralizedAgo(daysPassed, "day");
+
+    if (weeksPassed < 4) return pluralizedAgo(weeksPassed, "week");
+
+    if (monthsPassed < 12) return pluralizedAgo(monthsPassed, "month");
+
+    return pluralizedAgo(yearsPassed, "year");
 };
 
 export default timePassedSinceDate;
