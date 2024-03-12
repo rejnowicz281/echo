@@ -14,14 +14,19 @@ const DashboardLayout: FC<DashboardLayoutProps> = async ({ children }) => {
     return (
         <AuthProvider user={user}>
             <PresenceProvider>
-                <div className="flex flex-row flex-1">
-                    <div className="relative flex basis-[400px] shrink-0">
+                <div className="flex flex-col lg:flex-row-reverse flex-1">
+                    <div className="relative flex flex-1">
                         <div className="absolute overflow-auto inset-0 flex-1 flex flex-col">
-                            <MainSidebar />
+                            <div id="show-more-section"></div>
+                            <div id="main-children-section" className="flex-1 flex flex-col">
+                                {children}
+                            </div>
                         </div>
                     </div>
-                    <div className="relative flex flex-1">
-                        <div className="absolute overflow-auto inset-0 flex-1 flex flex-col">{children}</div>
+                    <div className="lg:relative lg:flex lg:basis-[400px] lg:shrink-0">
+                        <div className="lg:absolute lg:overflow-auto lg:inset-0 lg:flex-1 lg:flex lg:flex-col">
+                            <MainSidebar />
+                        </div>
                     </div>
                 </div>
             </PresenceProvider>
