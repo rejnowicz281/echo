@@ -1,1 +1,3 @@
-<sup>echo</sup> <sub><sup>echo</sup></sub> <sub>echo</sub>
+# echo
+
+A Facebook-Twitter like social media app built with NextJS 14. Full TypeScript support.
