@@ -10,18 +10,27 @@ import {
     DialogTrigger,
 } from "@/components/shadcn/ui/dialog";
 import { IoMdPersonAdd } from "@react-icons/all-files/io/IoMdPersonAdd";
-import { useState } from "react";
+import clsx from "clsx";
+import { FC, useState } from "react";
 import MainContent from "./main-content";
 
-const AddContactButton = () => {
+const AddContactButton: FC<{
+    sidebarOpen: boolean;
+}> = ({ sidebarOpen }) => {
     const [open, setOpen] = useState(false);
 
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <Button variant="ghost" className="rounded-2xl flex flex-row gap-2 items-center border">
+                <Button
+                    variant="ghost"
+                    className={clsx(
+                        "flex flex-row gap-2 items-center border mx-4",
+                        sidebarOpen ? "rounded-full 2xl:rounded-2xl" : "rounded-2xl"
+                    )}
+                >
                     <IoMdPersonAdd />
-                    Add Contact
+                    <div className={clsx(!sidebarOpen && "hidden 2xl:block")}>Add Contact</div>
                 </Button>
             </DialogTrigger>
             <DialogContent className="max-h-[500px]">

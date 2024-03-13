@@ -35,11 +35,11 @@ const ShowMoreButton = () => {
     }, [pathname]);
 
     const showMoreContainer = () => {
-        const showMoreSection = document.getElementById("show-more-section");
+        const mainSection = document.getElementById("main-section");
 
-        if (showMoreSection) {
+        if (mainSection) {
             return createPortal(
-                <div className="lg:hidden absolute inset-0 flex gap-4 justify-center py-8 px-4">
+                <div className="lg:hidden flex-1 flex justify-center py-8 px-4">
                     <div className="flex-1 flex flex-col justify-center gap-4 max-w-[350px]">
                         <CurrentUser onClick={() => (pathname === `/users/${user.id}` ? setShowMore(false) : null)} />
 
@@ -68,7 +68,7 @@ const ShowMoreButton = () => {
                         <SignOutButton />
                     </div>
                 </div>,
-                showMoreSection
+                mainSection
             );
         }
     };

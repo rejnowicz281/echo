@@ -13,7 +13,7 @@ import TogglePresenceButton from "./toggle-presence-button";
 const MainSidebar = () => {
     return (
         <div className="lg:px-16 lg:py-12 lg:border-r lg:border-r-gray-100 lg:flex-1 lg:flex-col lg:flex lg:gap-12">
-            <div className="hidden lg:flex lg:flex-col">
+            <div className="hidden lg:block">
                 <CurrentUser />
             </div>
             <div className="hidden lg:flex lg:flex-col lg:gap-3">
@@ -23,10 +23,13 @@ const MainSidebar = () => {
             </div>
             <div className="flex lg:flex-col lg:gap-5">
                 <HomeLink />
+
                 <DiscoverLink />
+
                 <div className="hidden lg:block">
                     <ProfileLink />
                 </div>
+
                 <MessagesLink />
 
                 <FriendsLink />
@@ -34,6 +37,7 @@ const MainSidebar = () => {
                 <div className="hidden lg:block">
                     <UsersLink />
                 </div>
+
                 <ShowMoreButton />
             </div>
         </div>

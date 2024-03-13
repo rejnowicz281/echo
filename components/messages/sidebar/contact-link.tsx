@@ -15,9 +15,10 @@ import { SidebarContact } from ".";
 
 type ContactLinkProps = {
     contact: SidebarContact;
+    sidebarOpen: boolean;
 };
 
-const ContactLink: FC<ContactLinkProps> = ({ contact }) => {
+const ContactLink: FC<ContactLinkProps> = ({ contact, sidebarOpen }) => {
     const pathname = usePathname();
 
     const { user } = useAuthContext();
@@ -41,13 +42,25 @@ const ContactLink: FC<ContactLinkProps> = ({ contact }) => {
     };
 
     return (
-        <Link href={href} className="group flex items-center justify-between gap-4 group">
+        <Link
+            href={href}
+            className={clsx(
+                "group flex items-center p-4 gap-4 group",
+                sidebarOpen
+                    ? "justify-between"
+                    : clsx(
+                          "hover:bg-gray-200 2xl:hover:bg-transparent transition-colors justify-center 2xl:justify-between",
+                          pathname === href && "bg-gray-200 2xl:bg-transparent"
+                      )
+            )}
+        >
             <div className="min-w-0 truncate flex items-center gap-3">
                 <PresenceAvatar userId={contact.id} avatarSize={50} src={contact.avatar_url} />
                 <div
                     className={clsx(
-                        "truncate flex flex-col justify-evenly p-2 group-hover:bg-gray-200 rounded-lg transition-colors",
-                        pathname === href && "bg-gray-200"
+                        "truncate flex-col justify-evenly p-2 group-hover:bg-gray-200 rounded-lg transition-colors",
+                        pathname === href && "bg-gray-200",
+                        !sidebarOpen && "hidden 2xl:flex"
                     )}
                 >
                     <div className="flex flex-row gap-2 items-center">

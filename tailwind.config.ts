@@ -13,6 +13,10 @@ const config = {
             },
         },
         extend: {
+            screens: {
+                "2xl": "1500px",
+                "3xl": "1650px",
+            },
             keyframes: {
                 "accordion-down": {
                     from: { height: "0" },
