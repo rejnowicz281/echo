@@ -9,22 +9,26 @@ const deleteAccount = async () => {
 
     const supabase = createClient();
 
-    const {
-        data: { user }
-    } = await supabase.auth.getUser();
+    const { data } = await supabase.auth.getUser();
 
-    if (!user) return actionError(actionName, { error: "You must be logged in to delete your account." });
+    const id = data.user?.id;
 
-    if (user.id === process.env.DEMO_USER_ID || user.email === "demo@user.demo")
+    if (id === process.env.DEMO_USER_ID || data.user?.email === "demo@demo.demo")
         return actionError(actionName, { error: "You cannot delete this demo account." });
 
-    const { error } = await supabase.from("users").delete().eq("id", user.id);
+    const avatarPath = data.user?.user_metadata.avatar_url?.split("/").slice(-1)[0];
+    const defaultAvatarName = process.env.DEFAULT_AVATAR_URL?.split("/").slice(-1)[0];
 
-    if (error) return actionError(actionName, { error });
+    const [{ error }, { error: storageError }] = await Promise.all([
+        supabase.from("users").delete().eq("id", id),
+        avatarPath === defaultAvatarName ? { error: null } : supabase.storage.from("avatars").remove([avatarPath])
+    ]);
+
+    if (storageError || error) return actionError(actionName, { error, storageError });
 
     await supabase.auth.signOut();
 
-    return actionSuccess(actionName, { email: user.email }, { redirectPath: "/login" });
+    return actionSuccess(actionName, { id }, { redirectPath: "/login" });
 };
 
 export default deleteAccount;

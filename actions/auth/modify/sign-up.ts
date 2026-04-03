@@ -21,7 +21,7 @@ const signUp = async (formData: FormData) => {
     const avatarFile =
         avatarFileFormData instanceof File && avatarFileFormData.type.startsWith("image/") ? avatarFileFormData : null;
 
-    const origin = headers().get("origin");
+    const origin = (await headers()).get("origin");
 
     const supabase = createClient();
 
@@ -51,7 +51,7 @@ const signUp = async (formData: FormData) => {
         }
 
         return {
-            avatar_url: process.env.DEFAULT_AVATAR_URL,
+            avatar_url: process.env.DEFAULT_AVATAR_URL
         };
     })();
 
@@ -64,10 +64,10 @@ const signUp = async (formData: FormData) => {
             data: {
                 first_name: first_name,
                 last_name: last_name,
-                avatar_url,
+                avatar_url
             },
-            emailRedirectTo: `${origin}/auth/callback`,
-        },
+            emailRedirectTo: `${origin}/auth/callback`
+        }
     });
 
     if (error) return actionError(actionName, { error }, { redirectPath: `/register?error=${error.message}` });
