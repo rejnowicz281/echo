@@ -9,15 +9,15 @@ import { NextSearchParams } from "@/types/next-search-params";
 import extractPageFromParams from "@/utils/general/extract-page-from-params";
 import { IoMdArrowRoundBack } from "@react-icons/all-files/io/IoMdArrowRoundBack";
 import Link from "next/link";
-import { FC } from "react";
 
 type PostPageProps = {
-    params: { id: string };
-    searchParams: NextSearchParams;
+    params: Promise<{ id: string }>;
+    searchParams: Promise<NextSearchParams>;
 };
 
-const PostPage: FC<PostPageProps> = async ({ params: { id }, searchParams }) => {
-    const page = extractPageFromParams(searchParams);
+const PostPage = async ({ params, searchParams }: PostPageProps) => {
+    const { id } = await params;
+    const page = extractPageFromParams(await searchParams);
 
     const [{ post }, { replies, isLastPage }] = await Promise.all([getPost(id), getPostReplies(page, id)]);
 

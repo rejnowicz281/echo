@@ -38,8 +38,10 @@ const signUp = async (formData: FormData) => {
 
     const queryParamsString = queryParams.toString();
 
-    if (queryParamsString)
-        return actionError(actionName, { queryParams }, { redirectPath: `/register?${queryParamsString}` });
+    if (queryParamsString) {
+        actionError(actionName, { queryParams }, { redirectPath: `/register?${queryParamsString}` });
+        return;
+    }
 
     const avatarData = (() => {
         if (avatarFile) {
@@ -70,14 +72,18 @@ const signUp = async (formData: FormData) => {
         }
     });
 
-    if (error) return actionError(actionName, { error }, { redirectPath: `/register?error=${error.message}` });
+    if (error) {
+        actionError(actionName, { error }, { redirectPath: `/register?error=${error.message}` });
+        return;
+    }
 
     if (bucket && fileName && avatarFile) {
         const { error } = await bucket.upload(fileName, avatarFile);
-        if (error) return actionError(actionName, { error }, { redirectPath: `/register?error=${error.message}` });
+        if (error) actionError(actionName, { error }, { redirectPath: `/register?error=${error.message}` });
+        return;
     }
 
-    return actionSuccess(actionName, {}, { redirectPath: "/" });
+    actionSuccess(actionName, {}, { redirectPath: "/" });
 };
 
 export default signUp;

@@ -12,18 +12,24 @@ const createFriendship = async (formData: FormData) => {
     const supabase = createClient();
 
     const {
-        data: { user },
+        data: { user }
     } = await supabase.auth.getUser();
 
-    if (!user) return actionError(actionName, { error: "You must be logged in to create a friendship" });
+    if (!user) {
+        actionError(actionName, { error: "You must be logged in to create a friendship" });
+        return;
+    }
 
     const { data: friendship, error } = await supabase
         .from("friendships")
         .insert([{ requester: user.id, recipient: recipient_id }]);
 
-    if (error) return actionError(actionName, { error });
+    if (error) {
+        actionError(actionName, { error });
+        return;
+    }
 
-    return actionSuccess(actionName, { friendship }, { revalidatePath: "/" });
+    actionSuccess(actionName, { friendship }, { revalidatePath: "/" });
 };
 
 export default createFriendship;

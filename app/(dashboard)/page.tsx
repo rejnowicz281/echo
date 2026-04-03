@@ -4,12 +4,13 @@ import PostForm from "@/components/posts/post-form";
 import PostsPagination from "@/components/posts/posts-pagination";
 import { NextSearchParams } from "@/types/next-search-params";
 import extractPageFromParams from "@/utils/general/extract-page-from-params";
-import { FC } from "react";
 
-const Home: FC<{
-    searchParams: NextSearchParams;
-}> = async ({ searchParams }) => {
-    const page = extractPageFromParams(searchParams);
+type HomePageProps = {
+    searchParams: Promise<NextSearchParams>;
+};
+
+const Home = async ({ searchParams }: HomePageProps) => {
+    const page = extractPageFromParams(await searchParams);
 
     const { posts, isLastPage, error } = await getFeedPosts(page);
 

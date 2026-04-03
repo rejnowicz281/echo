@@ -14,9 +14,12 @@ const createLike = async (formData: FormData) => {
 
     const { error } = await supabase.from("posts_likes").insert([{ post, user }]);
 
-    if (error) return actionError(actionName, { error });
+    if (error) {
+        actionError(actionName, { error });
+        return;
+    }
 
-    return actionSuccess(actionName, { post, user }, { revalidatePath: "/" });
+    actionSuccess(actionName, { post, user }, { revalidatePath: "/" });
 };
 
 export default createLike;

@@ -4,10 +4,13 @@ import PostsPagination from "@/components/posts/posts-pagination";
 import { NextSearchParams } from "@/types/next-search-params";
 import extractPageFromParams from "@/utils/general/extract-page-from-params";
 import Link from "next/link";
-import { FC } from "react";
 
-const DiscoverPage: FC<{ searchParams: NextSearchParams }> = async ({ searchParams }) => {
-    const page = extractPageFromParams(searchParams);
+type DiscoverPageProps = {
+    searchParams: Promise<NextSearchParams>;
+};
+
+const DiscoverPage = async ({ searchParams }: DiscoverPageProps) => {
+    const page = extractPageFromParams(await searchParams);
     const { posts, isLastPage, error } = await getDiscoveryPosts(page);
 
     if (error) return <ErrorContainer error={error} />;

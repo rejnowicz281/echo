@@ -13,9 +13,12 @@ const deleteLike = async (formData: FormData) => {
 
     const { error } = await supabase.from("posts_likes").delete().eq("id", like);
 
-    if (error) return actionError(actionName, { error });
+    if (error) {
+        actionError(actionName, { error });
+        return;
+    }
 
-    return actionSuccess(actionName, { like }, { revalidatePath: "/" });
+    actionSuccess(actionName, { like }, { revalidatePath: "/" });
 };
 
 export default deleteLike;

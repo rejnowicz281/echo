@@ -16,9 +16,12 @@ const acceptFriendship = async (formData: FormData) => {
         .update({ accepted: true })
         .eq("id", friendship_id);
 
-    if (error) return actionError(actionName, { error });
+    if (error) {
+        actionError(actionName, { error });
+        return;
+    }
 
-    return actionSuccess(actionName, { friendship }, { revalidatePath: "/" });
+    actionSuccess(actionName, { friendship }, { revalidatePath: "/" });
 };
 
 export default acceptFriendship;

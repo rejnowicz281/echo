@@ -4,15 +4,15 @@ import ConditionalPostForm from "@/components/user-profile/conditional-post-form
 import UserPostsContainer from "@/components/user-profile/user-posts-container";
 import { NextSearchParams } from "@/types/next-search-params";
 import extractPageFromParams from "@/utils/general/extract-page-from-params";
-import { FC } from "react";
 
 type UserPageProps = {
-    searchParams: NextSearchParams;
-    params: { id: string };
+    searchParams: Promise<NextSearchParams>;
+    params: Promise<{ id: string }>;
 };
 
-const UserPage: FC<UserPageProps> = async ({ params: { id }, searchParams }) => {
-    const page = extractPageFromParams(searchParams);
+const UserPage = async ({ params, searchParams }: UserPageProps) => {
+    const { id } = await params;
+    const page = extractPageFromParams(await searchParams);
 
     const { posts, isLastPage } = await getUserPosts(page, id);
 

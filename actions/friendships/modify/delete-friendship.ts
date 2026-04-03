@@ -11,11 +11,14 @@ const deleteFriendship = async (formData: FormData) => {
 
     const friendship_id = formData.get("friendship_id");
 
-    const { data: friendship, error } = await supabase.from("friendships").delete().eq("id", friendship_id);
+    const { error } = await supabase.from("friendships").delete().eq("id", friendship_id);
 
-    if (error) return actionError(actionName, { error });
+    if (error) {
+        actionError(actionName, { error });
+        return;
+    }
 
-    return actionSuccess(actionName, { friendship_id }, { revalidatePath: "/" });
+    actionSuccess(actionName, { friendship_id }, { revalidatePath: "/" });
 };
 
 export default deleteFriendship;

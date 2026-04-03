@@ -10,7 +10,7 @@ const signOut = async () => {
 
     await supabase.auth.signOut();
 
-    return actionSuccess(actionName, {}, { redirectPath: "/login" });
+    actionSuccess(actionName, {}, { redirectPath: "/login" });
 };
 
 export default signOut;

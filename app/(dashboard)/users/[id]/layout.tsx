@@ -7,14 +7,14 @@ import SectionLinks from "@/components/user-profile/section-links";
 import SettingsContainer from "@/components/user-profile/settings-container";
 import { UserProvider } from "@/components/user-profile/user-provider";
 import userDisplayName from "@/utils/general/user-display-name";
-import { FC } from "react";
 
 type UserPageLayoutProps = {
     children: React.ReactNode;
-    params: { id: string };
+    params: Promise<{ id: string }>;
 };
 
-const UserPageLayout: FC<UserPageLayoutProps> = async ({ children, params: { id } }) => {
+const UserPageLayout = async ({ children, params }: UserPageLayoutProps) => {
+    const { id } = await params;
     const { user } = await getUser(id);
 
     if (!user)

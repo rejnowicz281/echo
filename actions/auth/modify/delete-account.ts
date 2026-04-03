@@ -13,8 +13,10 @@ const deleteAccount = async () => {
 
     const id = data.user?.id;
 
-    if (id === process.env.DEMO_USER_ID || data.user?.email === "demo@demo.demo")
-        return actionError(actionName, { error: "You cannot delete this demo account." });
+    if (id === process.env.DEMO_USER_ID || data.user?.email === "demo@demo.demo") {
+        actionError(actionName, { error: "You cannot delete this demo account." });
+        return;
+    }
 
     const avatarPath = data.user?.user_metadata.avatar_url?.split("/").slice(-1)[0];
     const defaultAvatarName = process.env.DEFAULT_AVATAR_URL?.split("/").slice(-1)[0];
@@ -24,11 +26,14 @@ const deleteAccount = async () => {
         avatarPath === defaultAvatarName ? { error: null } : supabase.storage.from("avatars").remove([avatarPath])
     ]);
 
-    if (storageError || error) return actionError(actionName, { error, storageError });
+    if (storageError || error) {
+        actionError(actionName, { error, storageError });
+        return;
+    }
 
     await supabase.auth.signOut();
 
-    return actionSuccess(actionName, { id }, { redirectPath: "/login" });
+    actionSuccess(actionName, { id }, { redirectPath: "/login" });
 };
 
 export default deleteAccount;
