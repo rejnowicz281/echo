@@ -10,13 +10,13 @@ import {
     DialogHeader,
     DialogPortal,
     DialogTitle,
-    DialogTrigger,
+    DialogTrigger
 } from "@/components/shadcn/ui/dialog";
 import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
-    DropdownMenuTrigger,
+    DropdownMenuTrigger
 } from "@/components/shadcn/ui/dropdown-menu";
 import useAuthContext from "@/providers/auth-provider";
 import { Post } from "@/types/posts";
@@ -34,7 +34,7 @@ import {
     AlertDialogHeader,
     AlertDialogPortal,
     AlertDialogTitle,
-    AlertDialogTrigger,
+    AlertDialogTrigger
 } from "../../shadcn/ui/alert-dialog";
 import { Button } from "../../shadcn/ui/button";
 import PostForm from "../post-form";
@@ -53,7 +53,11 @@ const OptionsButton: FC<OptionsButtonProps> = ({ post }) => {
     const [deleteOpen, setDeleteOpen] = useState(false);
     const [editOpen, setEditOpen] = useState(false);
 
-    const handleDelete = async (formData: FormData) => {
+    const handleDelete = async () => {
+        const formData = new FormData();
+        formData.append("id", post.id);
+        formData.append("image_url", post.image_url || "");
+
         await deletePost(formData);
 
         if (pathname === `/posts/${post.id}`) router.push(post.parent_post ? `/posts/${post.parent_post}` : "/");
@@ -120,7 +124,6 @@ const OptionsButton: FC<OptionsButtonProps> = ({ post }) => {
                         <AlertDialogFooter>
                             <AlertDialogCancel>Cancel</AlertDialogCancel>
                             <form className="flex flex-col" action={handleDelete}>
-                                <input type="hidden" name="id" value={post.id} />
                                 <AlertDialogAction asChild>
                                     <SubmitButton content="Delete Post" loading="Deleting..." />
                                 </AlertDialogAction>
