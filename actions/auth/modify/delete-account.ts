@@ -10,12 +10,12 @@ const deleteAccount = async () => {
     const supabase = createClient();
 
     const {
-        data: { user },
+        data: { user }
     } = await supabase.auth.getUser();
 
     if (!user) return actionError(actionName, { error: "You must be logged in to delete your account." });
 
-    if (user.id === process.env.DEMO_USER_ID || user.email === "demo@demo.demo")
+    if (user.id === process.env.DEMO_USER_ID || user.email === "demo@user.demo")
         return actionError(actionName, { error: "You cannot delete this demo account." });
 
     const { error } = await supabase.from("users").delete().eq("id", user.id);

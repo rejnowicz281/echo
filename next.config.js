@@ -4,18 +4,23 @@ const nextConfig = {
         remotePatterns: [
             {
                 protocol: "https",
-                hostname: "avatars.githubusercontent.com",
+                hostname: "avatars.githubusercontent.com"
             },
             {
                 protocol: "https",
-                hostname: "lh3.googleusercontent.com",
+                hostname: "lh3.googleusercontent.com"
             },
             {
                 protocol: "https",
-                hostname: "trvvoqhvriwitcyitfid.supabase.co",
+                hostname: "asqzizjqsvxtehnswkro.supabase.co"
             },
-        ],
-    },
+            {
+                // Old Supabase URL
+                protocol: "https",
+                hostname: "trvvoqhvriwitcyitfid.supabase.co"
+            }
+        ]
+    }
 };
 
 module.exports = nextConfig;
