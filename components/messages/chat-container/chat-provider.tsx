@@ -3,9 +3,10 @@
 import useAuthContext from "@/providers/auth-provider";
 import { Message } from "@/types/message";
 import { assignTimestamp } from "@/utils/messages/generate-timestamps";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { createClient } from "@/utils/supabase/client";
+import { RealtimeChannel } from "@supabase/supabase-js";
 import { useRouter } from "next/navigation";
-import { FC, createContext, useContext, useEffect, useOptimistic } from "react";
+import { FC, createContext, useContext, useEffect, useOptimistic, useRef } from "react";
 import { Contact } from ".";
 
 type ChatContextType = {
@@ -28,32 +29,42 @@ export const ChatProvider: FC<ChatProviderProps> = ({ children, contact, message
     const { user } = useAuthContext();
 
     const router = useRouter();
-    const supabase = createClientComponentClient();
+    const supabase = createClient();
+
+    const messagesChannelRef = useRef<RealtimeChannel | null>(null);
 
     useEffect(() => {
         if (contact.id === user.id) return;
 
-        const messagesChannel = supabase
-            .channel("messages")
-            .on(
-                "postgres_changes",
-                {
-                    schema: "public",
-                    event: "*",
-                    table: "messages",
-                    filter: `recipient=eq.${user.id}`,
-                },
-                (payload) => {
-                    console.log("Change received, refreshing router", payload.new);
-                    router.refresh();
-                }
-            )
-            .subscribe();
+        const initializeRealtime = async () => {
+            await supabase.realtime.setAuth();
 
-        console.log("Connected to messages channel", messagesChannel.topic);
+            messagesChannelRef.current = supabase
+                .channel("messages")
+                .on(
+                    "postgres_changes",
+                    {
+                        schema: "public",
+                        event: "*",
+                        table: "messages",
+                        filter: `recipient=eq.${user.id}`
+                    },
+                    (payload) => {
+                        console.log("Change received, refreshing router", payload.new);
+                        router.refresh();
+                    }
+                )
+                .subscribe();
+        };
+
+        initializeRealtime();
 
         return () => {
-            supabase.removeChannel(messagesChannel);
+            if (messagesChannelRef.current) {
+                supabase.removeChannel(messagesChannelRef.current);
+
+                messagesChannelRef.current = null;
+            }
         };
     }, [supabase, router]);
 
@@ -63,7 +74,7 @@ export const ChatProvider: FC<ChatProviderProps> = ({ children, contact, message
             text,
             sender,
             loading: true,
-            created_at: new Date().toISOString(),
+            created_at: new Date().toISOString()
         };
 
         setOptimisticMessages((messages) => {
@@ -89,7 +100,7 @@ export const ChatProvider: FC<ChatProviderProps> = ({ children, contact, message
                 contact,
                 addOptimisticMessage,
                 deleteOptimisticMessage,
-                optimisticMessages,
+                optimisticMessages
             }}
         >
             {children}
